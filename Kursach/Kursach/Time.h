@@ -6,6 +6,5 @@ struct STime
 	int day;
 	int hour;
 	int minutes;
-	int second;
 };
 

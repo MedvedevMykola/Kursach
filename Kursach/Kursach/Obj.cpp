@@ -25,7 +25,7 @@ CObj::~CObj()
 ******************************************/
 void CObj::set_start()
 {
-	time_t rawtime;
+	time_t rawtime; 
 	struct tm * ptm;
 	time(&rawtime);// дата початку в секундах
 	ptm = gmtime(&rawtime);// дата і час в форматі GMT

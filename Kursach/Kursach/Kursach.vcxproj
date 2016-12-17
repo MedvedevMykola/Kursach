@@ -147,13 +147,17 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Exception.h" />
+    <ClInclude Include="MyGDrive.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Time.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Exception.cpp" />
     <ClCompile Include="Kursach.cpp" />
+    <ClCompile Include="MyGDrive.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -10,7 +10,7 @@ CObj::CObj(string name1, string desc1, string text1, STime dline1, char stat)
 	set_name(name1);
 	set_description(desc1);
 	set_text(text1);
-	our_time();
+	set_start();
 	set_deadline(dline1);
 	set_status(stat);
 }
@@ -23,9 +23,9 @@ CObj::~CObj()
 /******************************************
 *		визначення дати початку			  *
 ******************************************/
-void CObj::our_time()
+void CObj::set_start()
 {
-	time_t rawtime;
+	time_t rawtime; 
 	struct tm * ptm;
 	time(&rawtime);// дата початку в секундах
 	ptm = gmtime(&rawtime);// дата і час в форматі GMT

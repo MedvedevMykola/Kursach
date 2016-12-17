@@ -30,10 +30,12 @@
     <ClInclude Include="Time.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+
     <ClInclude Include="MyGDrive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Exception.h">
+    <ClInclude Include="My_List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,10 +49,13 @@
     <ClCompile Include="Obj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+
     <ClCompile Include="MyGDrive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Exception.cpp">
+
+    <ClCompile Include="My_List.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

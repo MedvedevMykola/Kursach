@@ -35,6 +35,64 @@ void MyGDrive::displayDocuments()
 	return;
 }
 
+void MyGDrive::DownloadDocument()
+{
+	char buffer[LINE_LEN + 1];
+	int ret_code = 0;
+	printf("\nDocument Number: ");
+	scanf("%80s", buffer);
+	SetResourceIndex(atoi(buffer));
+
+	printf("Download Directory: ");
+	scanf("%80s", buffer);
+	strcat(buffer, "\\");
+	strcat(buffer, GetResourceTitle());
+	SetLocalFile(buffer);
+
+	ret_code = DownloadFile(""); //Use the default file format
+	if (ret_code)
+		throw Exception("Google error");
+
+	printf("\n Download Successful\n");
+}
+
+void MyGDrive::UploadDocument()
+{
+	char buffer[LINE_LEN + 1];
+	int ret_code = 0;
+	printf("\nLocal File: ");
+	scanf("%80s", buffer);
+
+	SetResourceIndex(-1);
+	SetLocalFile(buffer);
+
+	printf("Name of New File on Server: ");
+	scanf("%80s", buffer);
+	UploadFile(buffer);
+	ret_code = GetLastErrorCode();
+
+	if (ret_code)
+		throw Exception("Google error");
+
+	displayDocuments();
+}
+
+void MyGDrive::DeleteDocument()
+{
+	char buffer[LINE_LEN + 1];
+	int ret_code = 0;
+	printf("\nDocument Number: ");
+	scanf("%80s", buffer);
+	SetResourceIndex(atoi(buffer));
+
+	ret_code = DeleteResource();
+
+	if (ret_code)
+		throw Exception("Google error");
+
+	displayDocuments();
+}
+
 void MyGDrive::DownloadDatabase()
 {
 	SetResourceIndex(-1); //Clear the documents collection
@@ -81,12 +139,15 @@ void MyGDrive::UploadDatabase()
 
 	if (ret_code)
 		throw Exception("Google error");
+
+	printf("\n Upload Successful\n");
+	return;
 }
 
 bool MyGDrive::Menu()
 {
 	system("cls");
-	printf("Type ? to select this menu, a number 1-5 to select the following choices:\n"
+	printf("Type ? to select this menu, a number 1-7 to select the following choices:\n"
 		"1.  List Documents\n"
 		"2.  Download Document\n"
 		"3.  Upload Document\n"
@@ -108,58 +169,21 @@ bool MyGDrive::Menu()
 
 		else if (!strcmp(buffer, "2")) //Download document
 		{
-			printf("\nDocument Number: ");
-			scanf("%80s", buffer);
-			SetResourceIndex(atoi(buffer));
-
-			printf("Download Directory: ");
-			scanf("%80s", buffer);
-			strcat(buffer, "\\");
-			strcat(buffer, GetResourceTitle());
-			SetLocalFile(buffer);
-
-			ret_code = DownloadFile(""); //Use the default file format
-			if (ret_code)
-				throw Exception("Google error");
-
-			printf("\n Download Successful\n");
+			DownloadDocument();
 			system("pause");
 			return true;
 		}
 
 		else if (!strcmp(buffer, "3")) //Upload document
 		{
-			printf("\nLocal File: ");
-			scanf("%80s", buffer);
-
-			SetResourceIndex(-1);
-			SetLocalFile(buffer);
-
-			printf("Name of New File on Server: ");
-			scanf("%80s", buffer);
-			UploadFile(buffer);
-			ret_code = GetLastErrorCode();
-
-			if (ret_code)
-				throw Exception("Google error");
-
-			displayDocuments();
+			UploadDocument();
 			system("pause");
 			return true;
 		}
 
 		else if (!strcmp(buffer, "4")) //Delete Document
 		{
-			printf("\nDocument Number: ");
-			scanf("%80s", buffer);
-			SetResourceIndex(atoi(buffer));
-
-			ret_code = DeleteResource();
-
-			if (ret_code)
-				throw Exception("Google error");
-
-			displayDocuments();
+			DeleteDocument();
 			system("pause");
 			return true;
 		}

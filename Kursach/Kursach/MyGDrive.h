@@ -19,6 +19,9 @@ public:
 		return 0;
 	}
 	void displayDocuments();
+	void DownloadDocument();
+	void UploadDocument();
+	void DeleteDocument();
 	void DownloadDatabase();
 	void UploadDatabase();
 	bool Menu();

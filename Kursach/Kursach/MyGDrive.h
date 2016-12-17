@@ -19,6 +19,7 @@ public:
 		return 0;
 	}
 	void displayDocuments();
-	void displayDocuments1();
+	void DownloadDatabase();
+	void UploadDatabase();
 	bool Menu();
 };

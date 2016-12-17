@@ -35,7 +35,7 @@ void MyGDrive::displayDocuments()
 	return;
 }
 
-void MyGDrive::displayDocuments1()
+void MyGDrive::DownloadDatabase()
 {
 	SetResourceIndex(-1); //Clear the documents collection
 	int ret_code = ListResources();
@@ -60,6 +60,29 @@ void MyGDrive::displayDocuments1()
 	return;
 }
 
+void MyGDrive::UploadDatabase()
+{
+	SetResourceIndex(-1);
+	char* str = "database.dat";
+	for (int i = 0;i<GetResourceCount();i++)
+	{
+		SetResourceIndex(i);
+		if (!strcmp(str, GetResourceTitle()))
+		{
+			int ret_code = DeleteResource(); //Use the default file format
+			if (ret_code)
+				throw Exception("Google error");
+		}
+	}
+	SetResourceIndex(-1);
+	SetLocalFile("database.dat");
+	UploadFile("database.dat");
+	int ret_code = GetLastErrorCode();
+
+	if (ret_code)
+		throw Exception("Google error");
+}
+
 bool MyGDrive::Menu()
 {
 	system("cls");
@@ -68,8 +91,9 @@ bool MyGDrive::Menu()
 		"2.  Download Document\n"
 		"3.  Upload Document\n"
 		"4.  Delete Document\n"
-		"5.  My Option\n"
-		"6.  Quit\n");
+		"5.  Download Database\n"
+		"6.  Upload Database\n"
+		"7.  Quit\n");
 	char buffer[LINE_LEN + 1];
 	int ret_code = 0;
 		printf("\n> ");
@@ -142,11 +166,19 @@ bool MyGDrive::Menu()
 
 		else if (!strcmp(buffer, "5"))
 		{
-			displayDocuments1();
+			DownloadDatabase();
 			system("pause");
 			return true;
 		}
+
 		else if (!strcmp(buffer, "6"))
+		{
+			UploadDatabase();
+			system("pause");
+			return true;
+		}
+
+		else if (!strcmp(buffer, "7"))
 		{
 			exit(0);
 		}

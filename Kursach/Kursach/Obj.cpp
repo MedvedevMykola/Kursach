@@ -47,3 +47,18 @@ void CObj::set_deadline(STime dline1)
 	deadline.hour = dline1.hour;
 	deadline.minutes = dline1.minutes;
 }
+
+bool CObj::operator<(const CObj & obj) const
+{
+	CObj tmp = obj;
+	if (this->start < tmp.start)
+		return true;
+	else
+		if (this->deadline < tmp.deadline)
+			return true;
+		else
+			if (this->name < tmp.name)
+				return true;
+			else
+				return false;
+}

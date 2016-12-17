@@ -28,12 +28,12 @@ void CObj::set_start()
 	time_t rawtime; 
 	struct tm * ptm;
 	time(&rawtime);// äàòà ïî÷àòêó â ñåêóíäàõ
-	ptm = gmtime(&rawtime);// äàòà ³ ÷àñ â ôîğìàò³ GMT
+	ptm = localtime(&rawtime);// äàòà ³ ÷àñ â ôîğìàò³ GMT
 	
-	start.year = (ptm->tm_year);
-	start.month = (ptm->tm_mon);
+	start.year = (ptm->tm_year + 1900);
+	+start.month = (ptm->tm_mon + 1);
 	start.day = (ptm->tm_mday);
-	start.hour = (ptm->tm_hour + 2) % 24;
+	start.hour = (ptm->tm_hour) % 24;
 	start.minutes = (ptm->tm_min);
 }
 /******************************************

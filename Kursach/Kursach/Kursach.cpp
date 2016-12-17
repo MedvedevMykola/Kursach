@@ -7,7 +7,6 @@ using namespace std;
 
 int main()
 {
-	
 	try
 	{
 		MyGDrive gdrive1;

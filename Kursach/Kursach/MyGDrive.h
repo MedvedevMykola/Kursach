@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <iostream>
+#include <conio.h>
 #include "Exception.h"
 #include "ingoogle.h"
 #define LINE_LEN 100
@@ -16,7 +18,7 @@ public:
 		e->Accept = true;
 		return 0;
 	}
-	void printOptions();
 	void displayDocuments();
+	void displayDocuments1();
 	bool Menu();
 };

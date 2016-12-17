@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "MyGDrive.h"
 
+
+using namespace std;
+
 MyGDrive::MyGDrive() : GDrive()
 {
 	OAuth oauth1;
@@ -13,19 +16,6 @@ MyGDrive::MyGDrive() : GDrive()
 	int ret_code = oauth1.GetLastErrorCode();
 	if (ret_code)
 		throw Exception("Google error");
-
-	printf("\n");
-	printOptions();
-}
-
-void MyGDrive::printOptions()
-{
-	printf("Type ? to select this menu, a number 1-5 to select the following choices:\n"
-		"1.  List Documents\n"
-		"2.  Download Document\n"
-		"3.  Upload Document\n"
-		"4.  Delete Document\n"
-		"5.  Quit\n");
 }
 
 void MyGDrive::displayDocuments()
@@ -45,21 +35,51 @@ void MyGDrive::displayDocuments()
 	return;
 }
 
+void MyGDrive::displayDocuments1()
+{
+	SetResourceIndex(-1); //Clear the documents collection
+	int ret_code = ListResources();
+	if (ret_code)
+		throw Exception("Google error");
+	remove("database.dat");
+	char* str = "database.dat";
+	int data = -1;
+	for (int i = 0;i<GetResourceCount();i++)
+	{
+		SetResourceIndex(i);
+		if (!strcmp(str, GetResourceTitle())) data = i;
+	}
+	SetResourceIndex(data);
+	char buffer[LINE_LEN + 1]="database.dat";
+	SetLocalFile(buffer);
+	ret_code = DownloadFile(""); //Use the default file format
+	if (ret_code)
+		throw Exception("Google error");
+
+	printf("\n Download Successful\n");
+	return;
+}
+
 bool MyGDrive::Menu()
 {
+	system("cls");
+	printf("Type ? to select this menu, a number 1-5 to select the following choices:\n"
+		"1.  List Documents\n"
+		"2.  Download Document\n"
+		"3.  Upload Document\n"
+		"4.  Delete Document\n"
+		"5.  My Option\n"
+		"6.  Quit\n");
 	char buffer[LINE_LEN + 1];
 	int ret_code = 0;
 		printf("\n> ");
 		scanf("%80s", buffer);
 
-		if (!strcmp(buffer, "?"))
-		{
-			printOptions();
-		}
-
-		else if (!strcmp(buffer, "1")) //List documents
+		if (!strcmp(buffer, "1")) //List documents
 		{
 			displayDocuments();
+			system("pause");
+			return true;
 		}
 
 		else if (!strcmp(buffer, "2")) //Download document
@@ -79,6 +99,8 @@ bool MyGDrive::Menu()
 				throw Exception("Google error");
 
 			printf("\n Download Successful\n");
+			system("pause");
+			return true;
 		}
 
 		else if (!strcmp(buffer, "3")) //Upload document
@@ -98,6 +120,8 @@ bool MyGDrive::Menu()
 				throw Exception("Google error");
 
 			displayDocuments();
+			system("pause");
+			return true;
 		}
 
 		else if (!strcmp(buffer, "4")) //Delete Document
@@ -112,9 +136,17 @@ bool MyGDrive::Menu()
 				throw Exception("Google error");
 
 			displayDocuments();
+			system("pause");
+			return true;
 		}
 
 		else if (!strcmp(buffer, "5"))
+		{
+			displayDocuments1();
+			system("pause");
+			return true;
+		}
+		else if (!strcmp(buffer, "6"))
 		{
 			exit(0);
 		}

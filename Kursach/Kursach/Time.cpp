@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Time.h"
-
+/******************************************
+*		перевизначення операції "<"		  *
+******************************************/
 bool STime::operator<(const STime & time) const
 {
 	STime tmp = time;

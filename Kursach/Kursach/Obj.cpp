@@ -47,7 +47,9 @@ void CObj::set_deadline(STime dline1)
 	deadline.hour = dline1.hour;
 	deadline.minutes = dline1.minutes;
 }
-
+/******************************************
+*		перевизначення операції "<"		  *
+******************************************/
 bool CObj::operator<(const CObj & obj) const
 {
 	CObj tmp = obj;

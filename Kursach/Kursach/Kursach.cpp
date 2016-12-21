@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MyGDrive.h"
+#include "Obj.h"
 #include "Exception.h"
 
 
@@ -7,7 +8,6 @@ using namespace std;
 
 int main()
 {
-
 	try
 	{
 		MyGDrive gdrive1;
@@ -17,6 +17,7 @@ int main()
 		excection.show();
 		system("pause");
 	}
+	system("pause");
 	return 0;
 
 }

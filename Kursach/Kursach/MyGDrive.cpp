@@ -112,7 +112,12 @@ void MyGDrive::DownloadDatabase()
 	SetLocalFile(buffer);
 	ret_code = DownloadFile(""); //Use the default file format
 	if (ret_code)
-		throw Exception("Google error");
+	{
+		FILE *f = fopen("database.dat", "rb");
+		printf("\n Created new file\n");
+		return;
+	}
+
 
 	printf("\n Download Successful\n");
 	return;

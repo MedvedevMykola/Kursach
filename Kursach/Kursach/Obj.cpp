@@ -3,7 +3,7 @@
 #include <ctime>    
 using namespace std;
 /******************************************
-*			конструктор					  *
+*			ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г°					  *
 ******************************************/
 CObj::CObj(string name1, string desc1, string text1, STime dline1, char stat)
 {
@@ -21,23 +21,26 @@ CObj::~CObj()
 
 }
 /******************************************
-*		визначення дати початку			  *
+*		ГўГЁГ§Г­Г Г·ГҐГ­Г­Гї Г¤Г ГІГЁ ГЇГ®Г·Г ГІГЄГі			  *
 ******************************************/
 void CObj::set_start()
 {
 	time_t rawtime; 
 	struct tm * ptm;
-	time(&rawtime);// дата початку в секундах
-	ptm = localtime(&rawtime);// дата і час в форматі GMT
+	time(&rawtime);// Г¤Г ГІГ  ГЇГ®Г·Г ГІГЄГі Гў Г±ГҐГЄГіГ­Г¤Г Гµ
+	ptm = localtime(&rawtime);// Г¤Г ГІГ  Ві Г·Г Г± Гў ГґГ®Г°Г¬Г ГІВі GMT
 	
 	start.year = (ptm->tm_year + 1900);
+
 	start.month = (ptm->tm_mon + 1);
+	+start.month = (ptm->tm_mon + 1);
+
 	start.day = (ptm->tm_mday);
 	start.hour = (ptm->tm_hour) % 24;
 	start.minutes = (ptm->tm_min);
 }
 /******************************************
-*		визначення дати дедлайну		  *
+*		ГўГЁГ§Г­Г Г·ГҐГ­Г­Гї Г¤Г ГІГЁ Г¤ГҐГ¤Г«Г Г©Г­Гі		  *
 ******************************************/
 void CObj::set_deadline(STime dline1)
 {
@@ -46,4 +49,21 @@ void CObj::set_deadline(STime dline1)
 	deadline.day = dline1.day;
 	deadline.hour = dline1.hour;
 	deadline.minutes = dline1.minutes;
+}
+/******************************************
+*		ГЇГҐГ°ГҐГўГЁГ§Г­Г Г·ГҐГ­Г­Гї Г®ГЇГҐГ°Г Г¶ВіВї "<"		  *
+******************************************/
+bool CObj::operator<(const CObj & obj) const
+{
+	CObj tmp = obj;
+	if (this->start < tmp.start)
+		return true;
+	else
+		if (this->deadline < tmp.deadline)
+			return true;
+		else
+			if (this->name < tmp.name)
+				return true;
+			else
+				return false;
 }

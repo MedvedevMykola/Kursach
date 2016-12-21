@@ -6,5 +6,6 @@ struct STime
 	int day;
 	int hour;
 	int minutes;
+	bool operator<(const STime &time)const;//перевизначення операції "<"
 };
 

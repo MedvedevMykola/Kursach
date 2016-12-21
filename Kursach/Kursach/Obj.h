@@ -11,15 +11,16 @@ class CObj
 	STime deadline;
 	char status;
 public:
+	CObj() {};
 	CObj(string name1, string desc1,string text1, STime dline1, char stat);
 	~CObj();
 	/******************************************
 	*				setter					  *
 	******************************************/
-	void set_start();
 	void set_name(string name1) { name = name1; }
 	void set_description(string desc1) { description = desc1; }
 	void set_text(string text1){ text = text1; }
+	void set_start();
 	void set_deadline(STime dline1);
 	void set_status(char stat){ status = stat; }
 	/******************************************
@@ -31,5 +32,8 @@ public:
 	STime get_start() { return start; }
 	STime get_deadline() { return deadline; }
 	char get_status() { return status; }
+	/******************************************
+	*				operator				  *
+	******************************************/
+	bool operator<(const CObj &obj)const;
 };
-

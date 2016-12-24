@@ -1,7 +1,11 @@
 #pragma once
 #include "Time.h"
 #include <string>
-using namespace std;
+#define _CRT_SECURE_NO_WARNINGS
+
+
+using std::string;
+
 class CObj
 {
 	string name;
@@ -12,6 +16,7 @@ class CObj
 	char status;
 public:
 	CObj() {};
+	CObj(const CObj&);
 	CObj(string name1, string desc1,string text1, STime dline1, char stat);
 	~CObj();
 	/******************************************
@@ -26,7 +31,7 @@ public:
 	/******************************************
 	*				getter					  *
 	******************************************/
-	string get_name() { return name; }
+	string get_name() const{ return name; }
 	string get_description() { return description; }
 	string get_text() { return text; }
 	STime get_start() { return start; }
@@ -36,4 +41,8 @@ public:
 	*				operator				  *
 	******************************************/
 	bool operator<(const CObj &obj)const;
+	/******************************************
+	*				functions				  *
+	******************************************/
+	void check_status();
 };

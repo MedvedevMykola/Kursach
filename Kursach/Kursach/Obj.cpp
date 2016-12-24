@@ -1,25 +1,30 @@
-#include "stdafx.h"
 #include "Obj.h"
 #include <ctime>    
+   
 using namespace std;
 /******************************************
 *			êîíñòðóêòîð					  *
 ******************************************/
+CObj::CObj(const CObj & obj)
+{
+	name = obj.name;
+	description = obj.description;
+	text = obj.text;
+	start = obj.start;
+	deadline = obj.deadline;
+	status = obj.status;
+}
 CObj::CObj(string name1, string desc1, string text1, STime dline1, char stat)
 {
-	set_name(name1);
-	set_description(desc1);
-	set_text(text1);
+	name = name1;
+	description = desc1;
+	text = text1;
 	set_start();
-	set_deadline(dline1);
-	set_status(stat);
+	deadline = dline1;
+	status = stat;
+	check_status();
 }
 
-
-CObj::~CObj()
-{
-
-}
 /******************************************
 *		âèçíà÷åííÿ äàòè ïî÷àòêó			  *
 ******************************************/
@@ -33,7 +38,7 @@ void CObj::set_start()
 	start.year = (ptm->tm_year + 1900);
 
 	start.month = (ptm->tm_mon + 1);
-	+start.month = (ptm->tm_mon + 1);
+	start.month = (ptm->tm_mon + 1);
 
 	start.day = (ptm->tm_mday);
 	start.hour = (ptm->tm_hour) % 24;
@@ -55,15 +60,40 @@ void CObj::set_deadline(STime dline1)
 ******************************************/
 bool CObj::operator<(const CObj & obj) const
 {
-	CObj tmp = obj;
-	if (this->start < tmp.start)
+	if (this->start < obj.start)
 		return true;
-	else
-		if (this->deadline < tmp.deadline)
+	else if (this->start == obj.start)
+		if (this->deadline < obj.deadline)
 			return true;
-		else
-			if (this->name < tmp.name)
+		else if (this->deadline == obj.deadline)
+			if (this->name < obj.name)
 				return true;
-			else
-				return false;
+	return false;
+}
+
+void CObj::check_status()
+{
+	STime curr_time;
+	time_t rawtime;
+	struct tm * ptm;
+	time(&rawtime);// äàòà ïî÷àòêó â ñåêóíäàõ
+	ptm = localtime(&rawtime);// äàòà ³ ÷àñ â ôîðìàò³ GMT
+
+	curr_time.year = (ptm->tm_year + 1900);
+
+	curr_time.month = (ptm->tm_mon + 1);
+	curr_time.month = (ptm->tm_mon + 1);
+
+	curr_time.day = (ptm->tm_mday);
+	curr_time.hour = (ptm->tm_hour) % 24;
+	curr_time.minutes = (ptm->tm_min);
+	if (deadline < curr_time)
+	{
+		this->status = '1';
+	}
+}
+
+CObj::~CObj()
+{
+
 }

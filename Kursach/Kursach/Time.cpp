@@ -1,20 +1,31 @@
-#include "stdafx.h"
 #include "Time.h"
 /******************************************
 *		перевизначення операції "<"		  *
 ******************************************/
 bool STime::operator<(const STime & time) const
 {
-	STime tmp = time;
-	if (this->year < tmp.year)
+	if (year < time.year)
 		return true;
-	else if (this->month < tmp.month)
+	else if (year == time.year)
+		if (month < time.month)
+			return true;
+		else if (month == time.month)
+			if (day < time.day)
+				return true;
+			else if (day == time.day)
+				if (hour < time.hour)
+					return true;
+				else if (hour == time.hour)
+					if (minutes < time.minutes)
+						return true;
+
+
+	return false;
+}
+
+bool STime::operator==(const STime & time) const
+{
+	if ((year == time.year) && (month == time.month) && (day == time.day) && (hour == time.hour) && (minutes == time.minutes))
 		return true;
-	else if (this->day < tmp.day)
-		return true;
-	else if (this->hour < tmp.hour)
-		return true;
-	else if (this->minutes < tmp.minutes)
-		return true;
-	else return false;
+	return false;
 }

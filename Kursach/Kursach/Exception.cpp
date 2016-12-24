@@ -1,17 +1,17 @@
-#include "stdafx.h"
 #include "Exception.h"
+#define _CRT_SECURE_NO_WARNINGS
 
 
-Exception::Exception(char* message) {
+CException::CException(char* message) {
 	msg = new char[strlen(message) + 1];
 	strcpy(msg, message);
 }
 
-Exception::~Exception() {
+CException::~CException() {
 	delete[] msg;
 	msg = nullptr;
 }
 
-void Exception::show(void) {
+void CException::show(void) {
 	printf("%s\n", msg);
 }

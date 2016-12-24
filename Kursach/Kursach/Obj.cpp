@@ -1,7 +1,6 @@
-#include "stdafx.h"
 #include "Obj.h"
 #include <ctime>    
-#include <iostream>    
+   
 using namespace std;
 /******************************************
 *			êîíñòðóêòîð					  *

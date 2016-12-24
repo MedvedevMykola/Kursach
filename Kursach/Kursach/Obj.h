@@ -1,7 +1,11 @@
 #pragma once
 #include "Time.h"
 #include <string>
-using namespace std;
+#define _CRT_SECURE_NO_WARNINGS
+
+
+using std::string;
+
 class CObj
 {
 	string name;

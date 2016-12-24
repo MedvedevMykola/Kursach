@@ -1,5 +1,5 @@
-#include "stdafx.h"
 #include "MyGDrive.h"
+#define _CRT_SECURE_NO_WARNINGS
 
 
 using namespace std;
@@ -15,7 +15,7 @@ MyGDrive::MyGDrive() : GDrive()
 	SetAuthorization(oauth1.GetAuthorization());
 	int ret_code = oauth1.GetLastErrorCode();
 	if (ret_code)
-		throw Exception("Google error");
+		throw CException("Google error");
 }
 
 void MyGDrive::Void()
@@ -23,7 +23,7 @@ void MyGDrive::Void()
 	SetResourceIndex(-1);
 	int ret_code = ListResources();
 	if (ret_code)
-		throw Exception("Google error");
+		throw CException("Google error");
 	for (int i = 0;i<GetResourceCount();i++)
 	{
 		SetResourceIndex(i);
@@ -36,7 +36,7 @@ void MyGDrive::displayDocuments()
 	SetResourceIndex(-1); //Clear the documents collection
 	int ret_code = ListResources();
 	if (ret_code)
-		throw Exception("Google error");
+		throw CException("Google error");
 
 	printf("%-4.1s%-42.40s%-22.20s%-32.30s\n\n", "#", "Title", "Author", "Modified Data");
 
@@ -65,7 +65,7 @@ void MyGDrive::DownloadDocument()
 
 	ret_code = DownloadFile(""); //Use the default file format
 	if (ret_code)
-		throw Exception("Google error");
+		throw CException("Google error");
 
 	printf("\n Download Successful\n");
 }
@@ -86,7 +86,7 @@ void MyGDrive::UploadDocument()
 	ret_code = GetLastErrorCode();
 
 	if (ret_code)
-		throw Exception("Google error");
+		throw CException("Google error");
 
 	displayDocuments();
 }
@@ -103,7 +103,7 @@ void MyGDrive::DeleteDocument()
 	ret_code = DeleteResource();
 
 	if (ret_code)
-		throw Exception("Google error");
+		throw CException("Google error");
 
 	displayDocuments();
 }
@@ -113,7 +113,7 @@ void MyGDrive::DownloadDatabase()
 	SetResourceIndex(-1); //Clear the documents collection
 	int ret_code = ListResources();
 	if (ret_code)
-		throw Exception("Google error");
+		throw CException("Google error");
 	remove("database.dat");
 	char* str = "database.dat";
 	int data = -1;
@@ -151,7 +151,7 @@ void MyGDrive::UploadDatabase()
 		{
 			int ret_code = DeleteResource(); //Use the default file format
 			if (ret_code)
-				throw Exception("Google error");
+				throw CException("Google error");
 		}
 	}
 	SetResourceIndex(-1);
@@ -160,7 +160,7 @@ void MyGDrive::UploadDatabase()
 	int ret_code = GetLastErrorCode();
 
 	if (ret_code)
-		throw Exception("Google error");
+		throw CException("Google error");
 
 	printf("\n Upload Successful\n");
 	return;

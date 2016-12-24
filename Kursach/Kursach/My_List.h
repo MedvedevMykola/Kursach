@@ -11,7 +11,9 @@
 #include <conio.h>
 #include "Exception.h"
 
-using namespace std;
+
+using std::set;
+
 class My_List
 {
 	set<CObj>table_intime;

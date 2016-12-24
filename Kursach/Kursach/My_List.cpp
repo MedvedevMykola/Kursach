@@ -1,5 +1,6 @@
-#include "stdafx.h"
 #include "My_List.h"
+#define _CRT_SECURE_NO_WARNINGS
+
 
 using namespace std;
 
@@ -23,7 +24,7 @@ void My_List::show()
 {
 	try {
 		if (table_intime.empty())
-			throw Exception("Empty Intime List");
+			throw CException("Empty Intime List");
 		auto iter = table_intime.begin();
 		cout << "Intime:" << endl;
 		for (int i = 0;i < table_intime.size();i++)
@@ -36,12 +37,12 @@ void My_List::show()
 				iter++;
 		}
 	}
-	catch (Exception& excection) {
+	catch (CException& excection) {
 		excection.show();
 	}
 	try {
 		if (table_outtime.empty())
-			throw Exception("Empty Outtime List");
+			throw CException("Empty Outtime List");
 		cout << "Outtime:" << endl;
 		auto iter = table_outtime.begin();
 		for (int i = 0;i < table_outtime.size();i++)
@@ -54,7 +55,7 @@ void My_List::show()
 				iter++;
 		}
 	}
-	catch (Exception& excection) {
+	catch (CException& excection) {
 		excection.show();
 	}
 }

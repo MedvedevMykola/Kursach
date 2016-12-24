@@ -12,7 +12,7 @@ void My_List::add_obj(CObj obj)
 {
 	
 	obj.check_status();
-	if (obj.get_start().year < 0)
+	if (obj.get_name() == string())
 		return;
 	if (obj.get_status() == '0')
 		table_intime.insert(obj);
@@ -20,43 +20,50 @@ void My_List::add_obj(CObj obj)
 		table_outtime.insert(obj);
 }
 
-void My_List::show()
+void My_List::show(DataGridView^ Table_intime, DataGridView^ Table_outtime)
 {
 	try {
 		if (table_intime.empty())
 			throw CException("Empty Intime List");
 		auto iter = table_intime.begin();
-		cout << "Intime:" << endl;
+		/*cout << "Intime:" << endl;*/
+		Table_intime->RowCount = table_intime.size();
 		for (int i = 0;i < table_intime.size();i++)
 		{
 			CObj temp = *iter;
-			cout << temp.get_name() << " " << temp.get_status() << " " << temp.get_text() << " " << temp.get_description();
-			cout << " " << temp.get_deadline().year << " " << temp.get_deadline().month << " " << temp.get_deadline().day << " " << temp.get_deadline().hour << ":" << temp.get_deadline().minutes << " ";
-			cout << " " << temp.get_start().year << " " << temp.get_start().month << " " << temp.get_start().day << " " << temp.get_start().hour << ":" << temp.get_start().minutes << endl;
+			DateTime(12, 12, 30, 12, 12, 12);
+			Table_intime->Rows[i]->Cells[0]->Value = gcnew String(temp.get_name().c_str());
+			Table_intime->Rows[i]->Cells[1]->Value = Convert::ToString(temp.get_start());
+			Table_intime->Rows[i]->Cells[2]->Value = Convert::ToString(temp.get_deadline());
+			Table_intime->Rows[i]->Cells[3]->Value = gcnew String(temp.get_description().c_str());
+			Table_intime->Rows[i]->Cells[4]->Value = gcnew String(temp.get_text().c_str());
 			if (i != table_intime.size() - 1)
 				iter++;
 		}
 	}
 	catch (CException& excection) {
-		excection.show();
 	}
+
 	try {
 		if (table_outtime.empty())
-			throw CException("Empty Outtime List");
-		cout << "Outtime:" << endl;
+			throw CException("Empty Intime List");
 		auto iter = table_outtime.begin();
+		/*cout << "Intime:" << endl;*/
+		Table_outtime->RowCount = table_outtime.size();
 		for (int i = 0;i < table_outtime.size();i++)
 		{
 			CObj temp = *iter;
-			cout << temp.get_name() << " " << temp.get_status() << " " << temp.get_text() << " " << temp.get_description();
-			cout << " " << temp.get_deadline().year << " " << temp.get_deadline().month << " " << temp.get_deadline().day << " " << temp.get_deadline().hour << ":" << temp.get_deadline().minutes << " ";
-			cout << " " << temp.get_start().year << " " << temp.get_start().month << " " << temp.get_start().day << " " << temp.get_start().hour << ":" << temp.get_start().minutes << endl;
+			DateTime(12, 12, 30, 12, 12, 12);
+			Table_outtime->Rows[i]->Cells[0]->Value = gcnew String(temp.get_name().c_str());
+			Table_outtime->Rows[i]->Cells[1]->Value = Convert::ToString(temp.get_start());
+			Table_outtime->Rows[i]->Cells[2]->Value = Convert::ToString(temp.get_deadline());
+			Table_outtime->Rows[i]->Cells[3]->Value = gcnew String(temp.get_description().c_str());
+			Table_outtime->Rows[i]->Cells[4]->Value = gcnew String(temp.get_text().c_str());
 			if (i != table_intime.size() - 1)
 				iter++;
 		}
 	}
 	catch (CException& excection) {
-		excection.show();
 	}
 }
 

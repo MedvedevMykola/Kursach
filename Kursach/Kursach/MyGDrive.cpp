@@ -129,13 +129,9 @@ void MyGDrive::DownloadDatabase()
 	if (ret_code)
 	{
 		FILE *f = fopen("database.dat", "wb, ccs=UTF-8");
-		printf("\n Created new file\n");
 		fclose(f);
 		return;
 	}
-
-
-	printf("\n Download Successful\n");
 	return;
 }
 
@@ -161,8 +157,6 @@ void MyGDrive::UploadDatabase()
 
 	if (ret_code)
 		throw CException("Google error");
-
-	printf("\n Upload Successful\n");
 	return;
 }
 

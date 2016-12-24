@@ -5,6 +5,7 @@
 
 
 using std::string;
+using namespace System;
 
 class CObj
 {
@@ -34,8 +35,8 @@ public:
 	string get_name() const{ return name; }
 	string get_description() { return description; }
 	string get_text() { return text; }
-	STime get_start() { return start; }
-	STime get_deadline() { return deadline; }
+	DateTime get_start();
+	DateTime get_deadline();
 	char get_status() { return status; }
 	/******************************************
 	*				operator				  *

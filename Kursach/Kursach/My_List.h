@@ -13,6 +13,12 @@
 
 
 using std::set;
+using namespace System;
+using namespace System::ComponentModel;
+using namespace System::Collections;
+using namespace System::Windows::Forms;
+using namespace System::Data;
+using namespace System::Drawing;
 
 class My_List
 {
@@ -21,7 +27,7 @@ class My_List
 public:
 	My_List();
 	void add_obj(CObj);
-	void show();
+	void show(DataGridView^, DataGridView^);
 	void read_from_file();
 	void write_to_file();
 	bool move(int);

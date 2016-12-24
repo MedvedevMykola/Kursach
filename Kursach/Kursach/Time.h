@@ -8,6 +8,6 @@ struct STime
 	int minutes;
 	int seconds;
 	bool operator<(const STime &time)const;//перевизначення операції "<"
-	bool operator==(const STime &time)const;//перевизначення операції "<"
+	bool operator==(const STime &time)const;//перевизначення операції "=="
 };
 

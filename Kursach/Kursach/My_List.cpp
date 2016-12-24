@@ -26,7 +26,6 @@ void My_List::show(DataGridView^ Table_intime, DataGridView^ Table_outtime)
 		if (table_intime.empty())
 			throw CException("Empty Intime List");
 		auto iter = table_intime.begin();
-		/*cout << "Intime:" << endl;*/
 		Table_intime->RowCount = table_intime.size();
 		for (int i = 0;i < table_intime.size();i++)
 		{
@@ -46,9 +45,8 @@ void My_List::show(DataGridView^ Table_intime, DataGridView^ Table_outtime)
 
 	try {
 		if (table_outtime.empty())
-			throw CException("Empty Intime List");
+			throw CException("Empty Outtime List");
 		auto iter = table_outtime.begin();
-		/*cout << "Intime:" << endl;*/
 		Table_outtime->RowCount = table_outtime.size();
 		for (int i = 0;i < table_outtime.size();i++)
 		{

@@ -21,11 +21,12 @@ bool STime::operator<(const STime & time) const
 					else if (minutes == time.minutes)
 						if (seconds < time.seconds)
 							return true;
-
-
+	
 	return false;
 }
-
+/******************************************
+*		перевизначення операції "=="	  *
+******************************************/
 bool STime::operator==(const STime & time) const
 {
 	if ((year == time.year) && (month == time.month) && (day == time.day) && (hour == time.hour) && (minutes == time.minutes) && (seconds == time.seconds))

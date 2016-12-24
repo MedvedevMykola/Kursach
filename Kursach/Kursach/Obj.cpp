@@ -38,7 +38,6 @@ void CObj::set_start()
 	start.year = (ptm->tm_year + 1900);
 
 	start.month = (ptm->tm_mon + 1);
-	start.month = (ptm->tm_mon + 1);
 
 	start.day = (ptm->tm_mday);
 	start.hour = (ptm->tm_hour) % 24;
@@ -91,7 +90,6 @@ void CObj::check_status()
 
 	curr_time.year = (ptm->tm_year + 1900);
 
-	curr_time.month = (ptm->tm_mon + 1);
 	curr_time.month = (ptm->tm_mon + 1);
 
 	curr_time.day = (ptm->tm_mday);

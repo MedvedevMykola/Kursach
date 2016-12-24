@@ -22,14 +22,14 @@ using namespace System::Drawing;
 
 class My_List
 {
-	set<CObj>table_intime;
-	set<CObj>table_outtime;
+	set<CObj>table_intime; //список активних завдань
+	set<CObj>table_outtime;//список пасивних завдань
 public:
 	My_List();
-	void add_obj(CObj);
-	void show(DataGridView^, DataGridView^);
-	void read_from_file();
-	void write_to_file();
-	bool move(int);
+	void add_obj(CObj);    //функція добавки нового завдання
+	void show(DataGridView^, DataGridView^);//виведення списків
+	void read_from_file(); //читання з файлу
+	void write_to_file();  //запис в файл
+	bool move(int);        //переміщення елементу з активних в пасивні
 	~My_List();
 };

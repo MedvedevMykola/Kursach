@@ -18,6 +18,7 @@ public:
 		e->Accept = true;
 		return 0;
 	}
+	void Void();
 	void displayDocuments();
 	void DownloadDocument();
 	void UploadDocument();

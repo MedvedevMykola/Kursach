@@ -18,6 +18,19 @@ MyGDrive::MyGDrive() : GDrive()
 		throw Exception("Google error");
 }
 
+void MyGDrive::Void()
+{
+	SetResourceIndex(-1);
+	int ret_code = ListResources();
+	if (ret_code)
+		throw Exception("Google error");
+	for (int i = 0;i<GetResourceCount();i++)
+	{
+		SetResourceIndex(i);
+	}
+	return;
+}
+
 void MyGDrive::displayDocuments()
 {
 	SetResourceIndex(-1); //Clear the documents collection
@@ -37,6 +50,7 @@ void MyGDrive::displayDocuments()
 
 void MyGDrive::DownloadDocument()
 {
+	displayDocuments();
 	char buffer[LINE_LEN + 1];
 	int ret_code = 0;
 	printf("\nDocument Number: ");
@@ -79,6 +93,7 @@ void MyGDrive::UploadDocument()
 
 void MyGDrive::DeleteDocument()
 {
+	displayDocuments();
 	char buffer[LINE_LEN + 1];
 	int ret_code = 0;
 	printf("\nDocument Number: ");
@@ -113,8 +128,9 @@ void MyGDrive::DownloadDatabase()
 	ret_code = DownloadFile(""); //Use the default file format
 	if (ret_code)
 	{
-		FILE *f = fopen("database.dat", "rb");
+		FILE *f = fopen("database.dat", "wb, ccs=UTF-8");
 		printf("\n Created new file\n");
+		fclose(f);
 		return;
 	}
 
@@ -125,9 +141,10 @@ void MyGDrive::DownloadDatabase()
 
 void MyGDrive::UploadDatabase()
 {
+	Void();
 	SetResourceIndex(-1);
 	char* str = "database.dat";
-	for (int i = 0;i<GetResourceCount();i++)
+	for (int i = 0;i < GetResourceCount();i++)
 	{
 		SetResourceIndex(i);
 		if (!strcmp(str, GetResourceTitle()))

@@ -18,6 +18,9 @@ bool STime::operator<(const STime & time) const
 				else if (hour == time.hour)
 					if (minutes < time.minutes)
 						return true;
+					else if (minutes == time.minutes)
+						if (seconds < time.seconds)
+							return true;
 
 
 	return false;
@@ -25,7 +28,7 @@ bool STime::operator<(const STime & time) const
 
 bool STime::operator==(const STime & time) const
 {
-	if ((year == time.year) && (month == time.month) && (day == time.day) && (hour == time.hour) && (minutes == time.minutes))
+	if ((year == time.year) && (month == time.month) && (day == time.day) && (hour == time.hour) && (minutes == time.minutes) && (seconds == time.seconds))
 		return true;
 	return false;
 }

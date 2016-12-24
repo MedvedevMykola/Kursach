@@ -43,6 +43,7 @@ void CObj::set_start()
 	start.day = (ptm->tm_mday);
 	start.hour = (ptm->tm_hour) % 24;
 	start.minutes = (ptm->tm_min);
+	start.seconds = (ptm->tm_sec);
 }
 /******************************************
 *		âèçíà÷åííÿ äàòè äåäëàéíó		  *
@@ -54,6 +55,15 @@ void CObj::set_deadline(STime dline1)
 	deadline.day = dline1.day;
 	deadline.hour = dline1.hour;
 	deadline.minutes = dline1.minutes;
+	deadline.seconds = dline1.seconds;
+}
+DateTime CObj::get_start()
+{
+	return DateTime(start.year, start.month, start.day, start.hour, start.minutes, start.seconds);
+}
+DateTime CObj::get_deadline()
+{
+	return DateTime(deadline.year, deadline.month, deadline.day, deadline.hour, deadline.minutes, deadline.seconds);
 }
 /******************************************
 *		ïåðåâèçíà÷åííÿ îïåðàö³¿ "<"		  *

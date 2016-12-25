@@ -44,36 +44,27 @@ namespace Kursach {
 
 	protected:
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column1;
-
 	private: System::Windows::Forms::ToolStrip^  ToolPanel;
 	private: System::Windows::Forms::ToolStripButton^  AddNewTask;
-	private: System::Windows::Forms::ToolStripButton^  Move;
-	private: System::Windows::Forms::ToolStripButton^  toolStripButton3;
-	private: System::Windows::Forms::ToolStripButton^  toolStripButton1;
-	private: System::Windows::Forms::ToolStripButton^  toolStripButton2;
+	private: System::Windows::Forms::ToolStripButton^  ShowIntineTask;
+	private: System::Windows::Forms::ToolStripButton^  ShowOuttimeTask;
+	private: System::Windows::Forms::ToolStripButton^  ShowAll;
 	private: System::Windows::Forms::DataGridView^  NameList;
 	private: System::Windows::Forms::RichTextBox^  Deadline2;
-
 	private: System::Windows::Forms::Label^  Name1;
 	private: System::Windows::Forms::RichTextBox^  Date2;
-
 	private: System::Windows::Forms::Label^  Status1;
-
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Name3;
 	private: System::Windows::Forms::RichTextBox^  Name2;
-
 	private: System::Windows::Forms::Label^  Date1;
-
-
-
 	private: System::Windows::Forms::Label^  Deadline1;
 	private: System::Windows::Forms::RichTextBox^  Text2;
-
-
 	private: System::Windows::Forms::Label^  Text1;
 	private: System::Windows::Forms::Button^  Status2;
-
-
+	private: System::Windows::Forms::ToolStripDropDownButton^  Sorting;
+	private: System::Windows::Forms::ToolStripMenuItem^  çàÍàçâîþToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  çàÄàòîþToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  çàÄåäëàéíîìToolStripMenuItem;
 	private: System::ComponentModel::IContainer^  components;
 
 
@@ -93,10 +84,13 @@ namespace Kursach {
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->ToolPanel = (gcnew System::Windows::Forms::ToolStrip());
 			this->AddNewTask = (gcnew System::Windows::Forms::ToolStripButton());
-			this->Move = (gcnew System::Windows::Forms::ToolStripButton());
-			this->toolStripButton3 = (gcnew System::Windows::Forms::ToolStripButton());
-			this->toolStripButton1 = (gcnew System::Windows::Forms::ToolStripButton());
-			this->toolStripButton2 = (gcnew System::Windows::Forms::ToolStripButton());
+			this->ShowIntineTask = (gcnew System::Windows::Forms::ToolStripButton());
+			this->ShowOuttimeTask = (gcnew System::Windows::Forms::ToolStripButton());
+			this->ShowAll = (gcnew System::Windows::Forms::ToolStripButton());
+			this->Sorting = (gcnew System::Windows::Forms::ToolStripDropDownButton());
+			this->çàÍàçâîþToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->çàÄàòîþToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->çàÄåäëàéíîìToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->NameList = (gcnew System::Windows::Forms::DataGridView());
 			this->Name3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Deadline2 = (gcnew System::Windows::Forms::RichTextBox());
@@ -116,8 +110,8 @@ namespace Kursach {
 			// ToolPanel
 			// 
 			this->ToolPanel->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
-				this->AddNewTask, this->Move,
-					this->toolStripButton3, this->toolStripButton1, this->toolStripButton2
+				this->AddNewTask, this->ShowIntineTask,
+					this->ShowOuttimeTask, this->ShowAll, this->Sorting
 			});
 			this->ToolPanel->Location = System::Drawing::Point(0, 0);
 			this->ToolPanel->Name = L"ToolPanel";
@@ -135,42 +129,66 @@ namespace Kursach {
 			this->AddNewTask->Text = L"Äîáàâèòè Çàâäàííÿ";
 			this->AddNewTask->Click += gcnew System::EventHandler(this, &MyForm::NewTask);
 			// 
-			// Move
+			// ShowIntineTask
 			// 
-			this->Move->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
-			this->Move->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Move.Image")));
-			this->Move->ImageTransparentColor = System::Drawing::Color::Magenta;
-			this->Move->Name = L"Move";
-			this->Move->Size = System::Drawing::Size(110, 22);
-			this->Move->Text = L"Ïîòî÷í³ Çàâäàííÿ";
-			this->Move->Click += gcnew System::EventHandler(this, &MyForm::Moving);
+			this->ShowIntineTask->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
+			this->ShowIntineTask->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"ShowIntineTask.Image")));
+			this->ShowIntineTask->ImageTransparentColor = System::Drawing::Color::Magenta;
+			this->ShowIntineTask->Name = L"ShowIntineTask";
+			this->ShowIntineTask->Size = System::Drawing::Size(110, 22);
+			this->ShowIntineTask->Text = L"Ïîòî÷í³ Çàâäàííÿ";
+			this->ShowIntineTask->Click += gcnew System::EventHandler(this, &MyForm::ShowingIntime);
 			// 
-			// toolStripButton3
+			// ShowOuttimeTask
 			// 
-			this->toolStripButton3->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
-			this->toolStripButton3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripButton3.Image")));
-			this->toolStripButton3->ImageTransparentColor = System::Drawing::Color::Magenta;
-			this->toolStripButton3->Name = L"toolStripButton3";
-			this->toolStripButton3->Size = System::Drawing::Size(115, 22);
-			this->toolStripButton3->Text = L"Âèêîíàí³ Çàâäàííÿ";
+			this->ShowOuttimeTask->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
+			this->ShowOuttimeTask->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"ShowOuttimeTask.Image")));
+			this->ShowOuttimeTask->ImageTransparentColor = System::Drawing::Color::Magenta;
+			this->ShowOuttimeTask->Name = L"ShowOuttimeTask";
+			this->ShowOuttimeTask->Size = System::Drawing::Size(115, 22);
+			this->ShowOuttimeTask->Text = L"Âèêîíàí³ Çàâäàííÿ";
+			this->ShowOuttimeTask->Click += gcnew System::EventHandler(this, &MyForm::ShowingOuttime);
 			// 
-			// toolStripButton1
+			// ShowAll
 			// 
-			this->toolStripButton1->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
-			this->toolStripButton1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripButton1.Image")));
-			this->toolStripButton1->ImageTransparentColor = System::Drawing::Color::Magenta;
-			this->toolStripButton1->Name = L"toolStripButton1";
-			this->toolStripButton1->Size = System::Drawing::Size(81, 22);
-			this->toolStripButton1->Text = L"Âñ³ Çàâäàííÿ";
+			this->ShowAll->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
+			this->ShowAll->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"ShowAll.Image")));
+			this->ShowAll->ImageTransparentColor = System::Drawing::Color::Magenta;
+			this->ShowAll->Name = L"ShowAll";
+			this->ShowAll->Size = System::Drawing::Size(81, 22);
+			this->ShowAll->Text = L"Âñ³ Çàâäàííÿ";
+			this->ShowAll->Click += gcnew System::EventHandler(this, &MyForm::ShowingAll);
 			// 
-			// toolStripButton2
+			// Sorting
 			// 
-			this->toolStripButton2->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
-			this->toolStripButton2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripButton2.Image")));
-			this->toolStripButton2->ImageTransparentColor = System::Drawing::Color::Magenta;
-			this->toolStripButton2->Name = L"toolStripButton2";
-			this->toolStripButton2->Size = System::Drawing::Size(108, 22);
-			this->toolStripButton2->Text = L"Ñîðòóâàòè ïî äàò³";
+			this->Sorting->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
+			this->Sorting->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->çàÍàçâîþToolStripMenuItem,
+					this->çàÄàòîþToolStripMenuItem, this->çàÄåäëàéíîìToolStripMenuItem
+			});
+			this->Sorting->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Sorting.Image")));
+			this->Sorting->ImageTransparentColor = System::Drawing::Color::Magenta;
+			this->Sorting->Name = L"Sorting";
+			this->Sorting->Size = System::Drawing::Size(77, 22);
+			this->Sorting->Text = L"Ñîðòóâàòè";
+			// 
+			// çàÍàçâîþToolStripMenuItem
+			// 
+			this->çàÍàçâîþToolStripMenuItem->Name = L"çàÍàçâîþToolStripMenuItem";
+			this->çàÍàçâîþToolStripMenuItem->Size = System::Drawing::Size(153, 22);
+			this->çàÍàçâîþToolStripMenuItem->Text = L"Çà Íàçâîþ";
+			// 
+			// çàÄàòîþToolStripMenuItem
+			// 
+			this->çàÄàòîþToolStripMenuItem->Name = L"çàÄàòîþToolStripMenuItem";
+			this->çàÄàòîþToolStripMenuItem->Size = System::Drawing::Size(153, 22);
+			this->çàÄàòîþToolStripMenuItem->Text = L"Çà Äàòîþ";
+			// 
+			// çàÄåäëàéíîìToolStripMenuItem
+			// 
+			this->çàÄåäëàéíîìToolStripMenuItem->Name = L"çàÄåäëàéíîìToolStripMenuItem";
+			this->çàÄåäëàéíîìToolStripMenuItem->Size = System::Drawing::Size(153, 22);
+			this->çàÄåäëàéíîìToolStripMenuItem->Text = L"Çà Äåäëàéíîì";
 			// 
 			// NameList
 			// 
@@ -304,7 +322,6 @@ namespace Kursach {
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
-			this->Click += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->ToolPanel->ResumeLayout(false);
 			this->ToolPanel->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->NameList))->EndInit();
@@ -313,6 +330,34 @@ namespace Kursach {
 
 		}
 #pragma endregion
+	int table = 0;
+	void hide()
+	{
+		Name1->Visible = false;
+		Name2->Visible = false;
+		Date1->Visible = false;
+		Date2->Visible = false;
+		Deadline1->Visible = false;
+		Deadline2->Visible = false;
+		Status1->Visible = false;
+		Status2->Visible = false;
+		Text1->Visible = false;
+		Text2->Visible = false;
+	}
+
+	void visible()
+	{
+		Name1->Visible = true;
+		Name2->Visible = true;
+		Date1->Visible = true;
+		Date2->Visible = true;
+		Deadline1->Visible = true;
+		Deadline2->Visible = true;
+		Status1->Visible = true;
+		Status2->Visible = true;
+		Text1->Visible = true;
+		Text2->Visible = true;
+	}
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		My_List list;
 		STime s = { 2016,12,30,16,12 };
@@ -320,28 +365,67 @@ namespace Kursach {
 		CObj a2("qwe2", "QWERTY2", s, '0');
 		CObj a3("qwe3", "QWERTY3", s, '0');
 		CObj a4("qwe4", "QWERTY4", s, '1');
-		CObj a5("qwe5", "QWERTY5", s, '1');
+		CObj a5("qwe5", "QWERTY5", s, '2');
 		list.add_obj(a1);
 		list.add_obj(a2);
 		list.add_obj(a3);
 		list.add_obj(a4);
-		//list.add_obj(a5);
+		list.add_obj(a5);
 		//list.read_from_file();
-		list.show(NameList);
+		table = 0;
+		list.showIntime(NameList);
+		hide();
 		list.write_to_file();
 	}
+
 private: System::Void NewTask(System::Object^  sender, System::EventArgs^  e) {
 	Kursach::AddingNewTask form1;
 	form1.ShowDialog();
+	My_List list;
+	list.read_from_file();
+	if (table == 0)
+		list.showIntime(NameList);
+	else if (table == 1)
+		list.showOuttime(NameList);
+	else
+		list.show(NameList);
+	hide();
 }
+
 private: System::Void Moving(System::Object^  sender, System::EventArgs^  e) {
 	
 }
+
 private: System::Void Showing(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
 	My_List list;
 	list.read_from_file();
+	visible();
 	int t = Convert::ToInt32(NameList->CurrentRow->Index);
-	list.showOne(Name2, Date2, Deadline2, Text2, Status2, t);
+	list.showOne(Name2, Date2, Deadline2, Text2, Status2, t, table);
+}
+
+private: System::Void ShowingIntime(System::Object^  sender, System::EventArgs^  e) {
+	My_List list;
+	list.read_from_file();
+	table = 0;
+	list.showIntime(NameList);
+	hide();
+}
+
+private: System::Void ShowingOuttime(System::Object^  sender, System::EventArgs^  e) {
+	My_List list;
+	list.read_from_file();
+	table = 1;
+	list.showOuttime(NameList);
+	hide();
+}
+
+private: System::Void ShowingAll(System::Object^  sender, System::EventArgs^  e) {
+	My_List list;
+	list.read_from_file();
+	table = 2;
+	list.show(NameList);
+	hide();
 }
 };
 }

@@ -102,7 +102,7 @@ void CObj::check_status()
 	curr_time.day = (ptm->tm_mday);
 	curr_time.hour = (ptm->tm_hour) % 24;
 	curr_time.minutes = (ptm->tm_min);
-	if (deadline < curr_time)
+	if ((deadline < curr_time) && this->status == '0')
 	{
 		this->status = '1';
 	}

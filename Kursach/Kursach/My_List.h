@@ -29,7 +29,9 @@ public:
 	My_List();
 	void add_obj(CObj);    //функція добавки нового завдання
 	void show(DataGridView^);//виведення списку імен
-	void showOne(RichTextBox^, RichTextBox^, RichTextBox^, RichTextBox^, Button^, int);//виведення одного елементу
+	void showIntime(DataGridView^);
+	void showOuttime(DataGridView^);
+	void showOne(RichTextBox^, RichTextBox^, RichTextBox^, RichTextBox^, Button^, int, int);//виведення одного елементу
 	void read_from_file(); //читання з файлу
 	void write_to_file();  //запис в файл
 	bool move(int);        //переміщення елементу з активних в пасивні

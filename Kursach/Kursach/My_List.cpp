@@ -25,7 +25,7 @@ void My_List::add_obj(CObj obj)
 void My_List::show(DataGridView^ Table_intime)
 {
 	Table_intime->RowCount = 1;
-	if(!table_intime.empty()&& !table_outtime.empty())
+	if(!table_intime.empty()|| !table_outtime.empty())
 	Table_intime->RowCount = table_intime.size() + table_outtime.size();
 	if (!table_intime.empty())
 	{

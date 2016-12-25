@@ -1,4 +1,18 @@
 #include "Time.h"
+
+
+/******************************************
+*				перетворювач			  *
+******************************************/
+void STime::Set(DateTime date)
+{
+	year = date.Year;
+	month = date.Month;
+	day = date.Day;
+	hour = date.Hour;
+	minutes = date.Minute;
+	seconds = date.Second;
+}
 /******************************************
 *		перевизначення операції "<"		  *
 ******************************************/

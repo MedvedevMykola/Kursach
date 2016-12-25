@@ -2,22 +2,29 @@
 #include <ctime>    
    
 using namespace std;
+CObj::CObj()
+{
+	/*name.resize(5000);
+	text.resize(5000);*/
+}
 /******************************************
 *			êîíñòðóêòîð					  *
 ******************************************/
 CObj::CObj(const CObj & obj)
 {
+	/*name.resize(5000);
+	text.resize(5000);*/
 	name = obj.name;
-	description = obj.description;
 	text = obj.text;
 	start = obj.start;
 	deadline = obj.deadline;
 	status = obj.status;
 }
-CObj::CObj(string name1, string desc1, string text1, STime dline1, char stat)
+CObj::CObj(string name1, string text1, STime dline1, char stat)
 {
+	/*name.resize(5000);
+	text.resize(5000);*/
 	name = name1;
-	description = desc1;
 	text = text1;
 	set_start();
 	deadline = dline1;
@@ -99,6 +106,15 @@ void CObj::check_status()
 	{
 		this->status = '1';
 	}
+}
+
+void CObj::Copy(const CObj & obj)
+{
+	name = obj.name;
+	text = obj.text;
+	start = obj.start;
+	deadline = obj.deadline;
+	status = obj.status;
 }
 
 CObj::~CObj()

@@ -127,19 +127,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AddingNewTask.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Exception.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MyGDrive.h" />
+    <ClInclude Include="MyString.h" />
     <ClInclude Include="My_List.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Time.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AddingNewTask.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="Kursach.cpp" />
     <ClCompile Include="MyGDrive.cpp" />
+    <ClCompile Include="MyString.cpp" />
     <ClCompile Include="My_List.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Time.cpp" />
@@ -152,6 +158,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AddingNewTask.resx">
+      <DependentUpon>AddingNewTask.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MyForm.resx">
       <DependentUpon>MyForm.h</DependentUpon>
     </EmbeddedResource>

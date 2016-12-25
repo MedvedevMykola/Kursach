@@ -164,7 +164,7 @@ void My_List::showOne(RichTextBox ^ t1, RichTextBox ^ t2, RichTextBox ^ t3, Rich
 	}
 }
 
-void My_List::ChangeObjStatus(int pos, int table)
+void My_List::ChangeObjStatus(int pos, int table, Button^ b)
 {
 	int pos1 = pos;
 	if (table == 1)
@@ -190,6 +190,9 @@ void My_List::ChangeObjStatus(int pos, int table)
 				temp.set_status('2');
 				add_obj(temp);
 				table_intime.erase(iter);
+				b->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(225)),
+					static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(223)));
+				b->Text = "Виконано";
 			}
 		}
 

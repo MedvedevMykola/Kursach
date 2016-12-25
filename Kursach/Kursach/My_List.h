@@ -32,7 +32,7 @@ public:
 	void showIntime(DataGridView^);
 	void showOuttime(DataGridView^);
 	void showOne(RichTextBox^, RichTextBox^, RichTextBox^, RichTextBox^, Button^, int, int);//виведення одного елементу
-	void ChangeObjStatus(int, int);//переміщення елементу з активних в пасивні
+	void ChangeObjStatus(int, int, Button^);//переміщення елементу з активних в пасивні
 	void read_from_file(); //читання з файлу
 	void write_to_file();  //запис в файл
 	~My_List();

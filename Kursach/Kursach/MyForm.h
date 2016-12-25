@@ -62,9 +62,12 @@ namespace Kursach {
 	private: System::Windows::Forms::Label^  Text1;
 	private: System::Windows::Forms::Button^  Status2;
 	private: System::Windows::Forms::ToolStripDropDownButton^  Sorting;
-	private: System::Windows::Forms::ToolStripMenuItem^  çàÍàçâîþToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^  çàÄàòîþToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^  çàÄåäëàéíîìToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  SortByName;
+	private: System::Windows::Forms::ToolStripMenuItem^  SortByTime;
+	private: System::Windows::Forms::ToolStripMenuItem^  SortByDeadline;
+
+
+
 	private: System::ComponentModel::IContainer^  components;
 
 
@@ -88,9 +91,9 @@ namespace Kursach {
 			this->ShowOuttimeTask = (gcnew System::Windows::Forms::ToolStripButton());
 			this->ShowAll = (gcnew System::Windows::Forms::ToolStripButton());
 			this->Sorting = (gcnew System::Windows::Forms::ToolStripDropDownButton());
-			this->çàÍàçâîþToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->çàÄàòîþToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->çàÄåäëàéíîìToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->SortByName = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->SortByTime = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->SortByDeadline = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->NameList = (gcnew System::Windows::Forms::DataGridView());
 			this->Name3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Deadline2 = (gcnew System::Windows::Forms::RichTextBox());
@@ -163,8 +166,8 @@ namespace Kursach {
 			// 
 			this->Sorting->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
 			this->Sorting->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
-				this->çàÍàçâîþToolStripMenuItem,
-					this->çàÄàòîþToolStripMenuItem, this->çàÄåäëàéíîìToolStripMenuItem
+				this->SortByName,
+					this->SortByTime, this->SortByDeadline
 			});
 			this->Sorting->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Sorting.Image")));
 			this->Sorting->ImageTransparentColor = System::Drawing::Color::Magenta;
@@ -172,23 +175,26 @@ namespace Kursach {
 			this->Sorting->Size = System::Drawing::Size(77, 22);
 			this->Sorting->Text = L"Ñîðòóâàòè";
 			// 
-			// çàÍàçâîþToolStripMenuItem
+			// SortByName
 			// 
-			this->çàÍàçâîþToolStripMenuItem->Name = L"çàÍàçâîþToolStripMenuItem";
-			this->çàÍàçâîþToolStripMenuItem->Size = System::Drawing::Size(153, 22);
-			this->çàÍàçâîþToolStripMenuItem->Text = L"Çà Íàçâîþ";
+			this->SortByName->Name = L"SortByName";
+			this->SortByName->Size = System::Drawing::Size(153, 22);
+			this->SortByName->Text = L"Çà Íàçâîþ";
+			this->SortByName->Click += gcnew System::EventHandler(this, &MyForm::SortingByName);
 			// 
-			// çàÄàòîþToolStripMenuItem
+			// SortByTime
 			// 
-			this->çàÄàòîþToolStripMenuItem->Name = L"çàÄàòîþToolStripMenuItem";
-			this->çàÄàòîþToolStripMenuItem->Size = System::Drawing::Size(153, 22);
-			this->çàÄàòîþToolStripMenuItem->Text = L"Çà Äàòîþ";
+			this->SortByTime->Name = L"SortByTime";
+			this->SortByTime->Size = System::Drawing::Size(153, 22);
+			this->SortByTime->Text = L"Çà Äàòîþ";
+			this->SortByTime->Click += gcnew System::EventHandler(this, &MyForm::SortingByTime);
 			// 
-			// çàÄåäëàéíîìToolStripMenuItem
+			// SortByDeadline
 			// 
-			this->çàÄåäëàéíîìToolStripMenuItem->Name = L"çàÄåäëàéíîìToolStripMenuItem";
-			this->çàÄåäëàéíîìToolStripMenuItem->Size = System::Drawing::Size(153, 22);
-			this->çàÄåäëàéíîìToolStripMenuItem->Text = L"Çà Äåäëàéíîì";
+			this->SortByDeadline->Name = L"SortByDeadline";
+			this->SortByDeadline->Size = System::Drawing::Size(153, 22);
+			this->SortByDeadline->Text = L"Çà Äåäëàéíîì";
+			this->SortByDeadline->Click += gcnew System::EventHandler(this, &MyForm::SortingByDeadline);
 			// 
 			// NameList
 			// 
@@ -248,6 +254,8 @@ namespace Kursach {
 			// Name2
 			// 
 			this->Name2->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->Name2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->Name2->Location = System::Drawing::Point(222, 54);
 			this->Name2->Name = L"Name2";
 			this->Name2->Size = System::Drawing::Size(138, 25);
@@ -433,15 +441,23 @@ private: System::Void ChangeStatus(System::Object^  sender, System::EventArgs^  
 	My_List list;
 	list.read_from_file();
 	int t = Convert::ToInt32(NameList->CurrentRow->Index);
-	list.ChangeObjStatus(t, table);
-	list.write_to_file();
-	if (table == 0)
-		list.showIntime(NameList);
-	else if (table == 1)
-		list.showOuttime(NameList);
-	else
-		list.show(NameList);
-	list.showOne(Name2, Date2, Deadline2, Text2, Status2, t, table);
+	if (Status2->Text == "Âèêîíóºòüñÿ") {
+		list.ChangeObjStatus(t, table, Status2);
+		list.write_to_file();
+		if (table == 0)
+			list.showIntime(NameList);
+		else if (table == 1)
+			list.showOuttime(NameList);
+		else
+			list.show(NameList);
+		visible();
+	}
+}
+private: System::Void SortingByName(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void SortingByTime(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void SortingByDeadline(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }

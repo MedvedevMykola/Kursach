@@ -301,6 +301,7 @@ namespace Kursach {
 			this->Status2->TabIndex = 13;
 			this->Status2->Text = L"Статус";
 			this->Status2->UseVisualStyleBackColor = false;
+			this->Status2->Click += gcnew System::EventHandler(this, &MyForm::ChangeStatus);
 			// 
 			// MyForm
 			// 
@@ -426,6 +427,21 @@ private: System::Void ShowingAll(System::Object^  sender, System::EventArgs^  e)
 	table = 2;
 	list.show(NameList);
 	hide();
+}
+
+private: System::Void ChangeStatus(System::Object^  sender, System::EventArgs^  e) {
+	My_List list;
+	list.read_from_file();
+	int t = Convert::ToInt32(NameList->CurrentRow->Index);
+	list.ChangeObjStatus(t, table);
+	list.write_to_file();
+	if (table == 0)
+		list.showIntime(NameList);
+	else if (table == 1)
+		list.showOuttime(NameList);
+	else
+		list.show(NameList);
+	list.showOne(Name2, Date2, Deadline2, Text2, Status2, t, table);
 }
 };
 }

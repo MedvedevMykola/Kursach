@@ -24,6 +24,8 @@ void My_List::add_obj(CObj obj)
 
 void My_List::show(DataGridView^ Table_intime)
 {
+	Table_intime->RowCount = 1;
+	if(!table_intime.empty()&& !table_outtime.empty())
 	Table_intime->RowCount = table_intime.size() + table_outtime.size();
 	if (!table_intime.empty())
 	{
@@ -60,9 +62,10 @@ void My_List::show(DataGridView^ Table_intime)
 
 void My_List::showIntime(DataGridView^ Table_intime)
 {
-	Table_intime->RowCount = table_intime.size();
+	Table_intime->RowCount = 1;
 	if (!table_intime.empty())
 	{
+		Table_intime->RowCount = table_intime.size();
 		auto iter = table_intime.begin();
 		for (int i = 0;i < table_intime.size();i++)
 		{
@@ -79,9 +82,10 @@ void My_List::showIntime(DataGridView^ Table_intime)
 
 void My_List::showOuttime(DataGridView^ Table_intime)
 {
-	Table_intime->RowCount = table_outtime.size();
+	Table_intime->RowCount = 1;
 	if (!table_outtime.empty())
 	{
+		Table_intime->RowCount = table_outtime.size();
 		auto iter1 = table_outtime.begin();
 		for (int i = 0;i < table_outtime.size();i++)
 		{
@@ -89,12 +93,12 @@ void My_List::showOuttime(DataGridView^ Table_intime)
 			if (temp.get_status() == '2')
 			Table_intime->Rows[i]->Cells[0]->Style->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(225)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(223)));
-			else
+			if (temp.get_status() == '1')
 				Table_intime->Rows[i]->Cells[0]->Style->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)),
 					static_cast<System::Int32>(static_cast<System::Byte>(185)), static_cast<System::Int32>(static_cast<System::Byte>(185)));
 
 			Table_intime->Rows[i]->Cells[0]->Value = gcnew String(temp.get_name().c_str());
-			if (i != table_intime.size() - 1)
+			if (i != table_outtime.size() - 1)
 				iter1++;
 		}
 	}
@@ -160,6 +164,38 @@ void My_List::showOne(RichTextBox ^ t1, RichTextBox ^ t2, RichTextBox ^ t3, Rich
 	}
 }
 
+void My_List::ChangeObjStatus(int pos, int table)
+{
+	int pos1 = pos;
+	if (table == 1)
+		return;
+
+	if (pos1 + 1 > table_intime.size())
+	{
+		return;
+	}
+	else
+	{
+		if (!table_intime.empty())
+		{
+			auto iter = table_intime.begin();
+			for (int i = 0;i < pos1;i++)
+			{
+				if (i <= pos1 - 1)
+					iter++;
+			}
+			CObj temp = *iter;
+			if (temp.get_status() == '0')
+			{
+				temp.set_status('2');
+				add_obj(temp);
+				table_intime.erase(iter);
+			}
+		}
+
+	}
+}
+
 void My_List::read_from_file()
 {
 	FILE *f = fopen("database.dat", "rb, ccs=UTF-8");
@@ -202,26 +238,6 @@ void My_List::write_to_file()
 		}
 	}
 	fclose(f);
-}
-
-bool My_List::move(int pos)
-{
-	if (!table_intime.empty())
-	{
-		auto iter = table_intime.begin();
-		if (pos > table_intime.size() || (pos <= 0))
-			return false;
-		for (int i = 1;i < pos;i++)
-		{
-			if (i <= pos - 1)
-				iter++;
-		}
-		CObj temp = *iter;
-		temp.set_status('1');
-		add_obj(temp);
-		table_intime.erase(iter);
-		return true;
-	}
 }
 
 My_List::~My_List()

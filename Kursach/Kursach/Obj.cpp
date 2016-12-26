@@ -76,10 +76,10 @@ DateTime CObj::get_deadline()
 ******************************************/
 bool CObj::operator<(const CObj & obj) const
 {
-	if (this->start < obj.start)
+	if (obj.start < this->start)
 		return true;
 	else if (this->start == obj.start)
-		if (this->deadline < obj.deadline)
+		if (obj.deadline < this->deadline)
 			return true;
 		else if (this->deadline == obj.deadline)
 			if (this->name < obj.name)

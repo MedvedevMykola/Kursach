@@ -217,10 +217,12 @@ namespace Kursach {
 			// 
 			// Deadline2
 			// 
+			this->Deadline2->BackColor = System::Drawing::SystemColors::Control;
 			this->Deadline2->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->Deadline2->Location = System::Drawing::Point(510, 54);
+			this->Deadline2->Location = System::Drawing::Point(510, 60);
 			this->Deadline2->Name = L"Deadline2";
-			this->Deadline2->Size = System::Drawing::Size(138, 25);
+			this->Deadline2->ReadOnly = true;
+			this->Deadline2->Size = System::Drawing::Size(138, 19);
 			this->Deadline2->TabIndex = 3;
 			this->Deadline2->Text = L"";
 			// 
@@ -235,10 +237,12 @@ namespace Kursach {
 			// 
 			// Date2
 			// 
+			this->Date2->BackColor = System::Drawing::SystemColors::Control;
 			this->Date2->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->Date2->Location = System::Drawing::Point(366, 54);
+			this->Date2->Location = System::Drawing::Point(366, 60);
 			this->Date2->Name = L"Date2";
-			this->Date2->Size = System::Drawing::Size(138, 25);
+			this->Date2->ReadOnly = true;
+			this->Date2->Size = System::Drawing::Size(138, 19);
 			this->Date2->TabIndex = 5;
 			this->Date2->Text = L"";
 			// 
@@ -254,11 +258,10 @@ namespace Kursach {
 			// Name2
 			// 
 			this->Name2->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->Name2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->Name2->Location = System::Drawing::Point(222, 54);
+			this->Name2->Location = System::Drawing::Point(222, 60);
 			this->Name2->Name = L"Name2";
-			this->Name2->Size = System::Drawing::Size(138, 25);
+			this->Name2->ReadOnly = true;
+			this->Name2->Size = System::Drawing::Size(138, 21);
 			this->Name2->TabIndex = 7;
 			this->Name2->Text = L"";
 			// 
@@ -282,21 +285,23 @@ namespace Kursach {
 			// 
 			// Text2
 			// 
+			this->Text2->BackColor = System::Drawing::SystemColors::Control;
 			this->Text2->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->Text2->Location = System::Drawing::Point(222, 124);
+			this->Text2->Location = System::Drawing::Point(222, 132);
 			this->Text2->Name = L"Text2";
-			this->Text2->Size = System::Drawing::Size(570, 272);
+			this->Text2->ReadOnly = true;
+			this->Text2->Size = System::Drawing::Size(570, 264);
 			this->Text2->TabIndex = 11;
 			this->Text2->Text = L"";
 			// 
 			// Text1
 			// 
 			this->Text1->AutoSize = true;
-			this->Text1->Location = System::Drawing::Point(222, 105);
+			this->Text1->Location = System::Drawing::Point(219, 108);
 			this->Text1->Name = L"Text1";
-			this->Text1->Size = System::Drawing::Size(37, 13);
+			this->Text1->Size = System::Drawing::Size(43, 13);
 			this->Text1->TabIndex = 12;
-			this->Text1->Text = L"Текст";
+			this->Text1->Text = L"Задача";
 			// 
 			// Status2
 			// 
@@ -340,51 +345,31 @@ namespace Kursach {
 		}
 #pragma endregion
 	int table = 0;
-	void hide()
-	{
-		Name1->Visible = false;
-		Name2->Visible = false;
-		Date1->Visible = false;
-		Date2->Visible = false;
-		Deadline1->Visible = false;
-		Deadline2->Visible = false;
-		Status1->Visible = false;
-		Status2->Visible = false;
-		Text1->Visible = false;
-		Text2->Visible = false;
-	}
+	int sort = 0;
+	void hide();
+	void visible();
 
-	void visible()
-	{
-		Name1->Visible = true;
-		Name2->Visible = true;
-		Date1->Visible = true;
-		Date2->Visible = true;
-		Deadline1->Visible = true;
-		Deadline2->Visible = true;
-		Status1->Visible = true;
-		Status2->Visible = true;
-		Text1->Visible = true;
-		Text2->Visible = true;
-	}
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		My_List list;
-		STime s = { 2016,12,30,16,12 };
+		/*STime s = { 2016,12,30,16,12 };
 		CObj a1("qwe1", "QWERTY1", s, '0');
 		CObj a2("qwe2", "QWERTY2", s, '0');
 		CObj a3("qwe3", "QWERTY3", s, '0');
 		CObj a4("qwe4", "QWERTY4", s, '1');
 		CObj a5("qwe5", "QWERTY5", s, '2');
 		list.add_obj(a1);
-		list.add_obj(a2);
 		list.add_obj(a3);
+		list.add_obj(a2);
 		list.add_obj(a4);
-		list.add_obj(a5);
+		list.add_obj(a5);*/
 		//list.read_from_file();
+		list.read_from_file();
 		table = 0;
+		sort = 0;
+		list.SortByDate();
+		list.write_to_file();
 		list.showIntime(NameList);
 		hide();
-		list.write_to_file();
 	}
 
 private: System::Void NewTask(System::Object^  sender, System::EventArgs^  e) {
@@ -392,6 +377,13 @@ private: System::Void NewTask(System::Object^  sender, System::EventArgs^  e) {
 	form1.ShowDialog();
 	My_List list;
 	list.read_from_file();
+	if (sort == 0)
+		list.SortByDate();
+	else if (table == 1)
+		list.SortByDeadline();
+	else
+		list.SortByName();
+	list.write_to_file();
 	if (table == 0)
 		list.showIntime(NameList);
 	else if (table == 1)
@@ -401,16 +393,26 @@ private: System::Void NewTask(System::Object^  sender, System::EventArgs^  e) {
 	hide();
 }
 
-private: System::Void Moving(System::Object^  sender, System::EventArgs^  e) {
-	
-}
-
 private: System::Void Showing(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
 	My_List list;
 	list.read_from_file();
-	visible();
 	int t = Convert::ToInt32(NameList->CurrentRow->Index);
-	list.showOne(Name2, Date2, Deadline2, Text2, Status2, t, table);
+	hide();
+	if ((table == 0) && (!list.IsIntimeEmpty()))
+	{
+		visible();
+		list.showOne(Name2, Date2, Deadline2, Text2, Status2, t, table);
+	}
+	if ((table == 1) && (!list.IsOuttimeEmpty()))
+	{
+		visible();
+		list.showOne(Name2, Date2, Deadline2, Text2, Status2, t, table);
+	}
+	if ((table == 2) && (!list.IsOuttimeEmpty() || (!list.IsOuttimeEmpty())))
+	{
+		visible();
+		list.showOne(Name2, Date2, Deadline2, Text2, Status2, t, table);
+	}
 }
 
 private: System::Void ShowingIntime(System::Object^  sender, System::EventArgs^  e) {
@@ -441,23 +443,65 @@ private: System::Void ChangeStatus(System::Object^  sender, System::EventArgs^  
 	My_List list;
 	list.read_from_file();
 	int t = Convert::ToInt32(NameList->CurrentRow->Index);
-	if (Status2->Text == "Виконується") {
-		list.ChangeObjStatus(t, table, Status2);
-		list.write_to_file();
-		if (table == 0)
-			list.showIntime(NameList);
-		else if (table == 1)
-			list.showOuttime(NameList);
-		else
-			list.show(NameList);
-		visible();
-	}
+	list.ChangeObjStatus(t, table, Status2);
+	Status2->Enabled = false;
+	if (sort == 0)
+		list.SortByDate();
+	else if (table == 1)
+		list.SortByDeadline();
+	else
+		list.SortByName();
+	list.write_to_file();
+	if (table == 0)
+		list.showIntime(NameList);
+	else if (table == 1)
+		list.showOuttime(NameList);
+	else
+		list.show(NameList);
+	visible();
 }
+
 private: System::Void SortingByName(System::Object^  sender, System::EventArgs^  e) {
+	My_List list;
+	sort = 0;
+	list.read_from_file();
+	list.SortByName();
+	list.write_to_file();
+	if (table == 0)
+		list.showIntime(NameList);
+	else if (table == 1)
+		list.showOuttime(NameList);
+	else
+		list.show(NameList);
+	hide();
 }
 private: System::Void SortingByTime(System::Object^  sender, System::EventArgs^  e) {
+	My_List list;
+	sort = 1;
+	list.read_from_file();
+	list.SortByDate();
+	list.write_to_file();
+	if (table == 0)
+		list.showIntime(NameList);
+	else if (table == 1)
+		list.showOuttime(NameList);
+	else
+		list.show(NameList);
+	hide();
 }
 private: System::Void SortingByDeadline(System::Object^  sender, System::EventArgs^  e) {
+	My_List list;
+	sort = 2;
+	list.read_from_file();
+	list.SortByDeadline();
+	list.write_to_file();
+	if (table == 0)
+		list.showIntime(NameList);
+	else if (table == 1)
+		list.showOuttime(NameList);
+	else
+		list.show(NameList);
+	hide();
 }
 };
 }

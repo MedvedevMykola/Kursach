@@ -11,7 +11,7 @@ void STime::Set(DateTime date)
 	day = date.Day;
 	hour = date.Hour;
 	minutes = date.Minute;
-	seconds = date.Second;
+	seconds = 0;
 }
 /******************************************
 *		перевизначення операції "<"		  *

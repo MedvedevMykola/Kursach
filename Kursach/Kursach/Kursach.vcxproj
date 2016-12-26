@@ -144,6 +144,7 @@
     <ClCompile Include="AddingNewTask.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="Kursach.cpp" />
+    <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="MyGDrive.cpp" />
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="My_List.cpp" />

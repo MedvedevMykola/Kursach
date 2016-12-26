@@ -43,7 +43,6 @@ namespace Kursach {
 	private: System::Windows::Forms::DateTimePicker^  Deadline2;
 	protected:
 
-
 	protected:
 
 	protected:
@@ -52,7 +51,6 @@ namespace Kursach {
 	private: System::Windows::Forms::RichTextBox^  Text2;
 	private: System::Windows::Forms::Label^  Name1;
 	private: System::Windows::Forms::Label^  Deadline1;
-
 	private: System::Windows::Forms::Label^  Text1;
 	private: System::Windows::Forms::Button^  Adding;
 
@@ -80,16 +78,18 @@ namespace Kursach {
 			// 
 			// Deadline2
 			// 
-			this->Deadline2->Location = System::Drawing::Point(393, 25);
+			this->Deadline2->CustomFormat = L"dd MMMM yyyy  H:mm";
+			this->Deadline2->Format = System::Windows::Forms::DateTimePickerFormat::Custom;
+			this->Deadline2->Location = System::Drawing::Point(350, 25);
 			this->Deadline2->Name = L"Deadline2";
-			this->Deadline2->Size = System::Drawing::Size(156, 20);
+			this->Deadline2->Size = System::Drawing::Size(199, 20);
 			this->Deadline2->TabIndex = 0;
 			// 
 			// Name2
 			// 
 			this->Name2->Location = System::Drawing::Point(15, 25);
 			this->Name2->Name = L"Name2";
-			this->Name2->Size = System::Drawing::Size(372, 20);
+			this->Name2->Size = System::Drawing::Size(329, 20);
 			this->Name2->TabIndex = 2;
 			this->Name2->Text = L"";
 			// 

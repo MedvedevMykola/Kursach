@@ -20,15 +20,19 @@ MyGDrive::MyGDrive() : GDrive()
 
 void MyGDrive::Void()
 {
-	SetResourceIndex(-1);
-	int ret_code = ListResources();
-	if (ret_code)
-		throw CException("Google error");
-	for (int i = 0;i<GetResourceCount();i++)
+	try
 	{
-		SetResourceIndex(i);
+		SetResourceIndex(-1);
+		int ret_code = ListResources();
+		if (ret_code)
+			throw CException("Google error");
+		for (int i = 0;i < GetResourceCount();i++)
+		{
+			SetResourceIndex(i);
+		}
+		return;
 	}
-	return;
+	catch(...) {}
 }
 
 void MyGDrive::displayDocuments()
@@ -110,54 +114,62 @@ void MyGDrive::DeleteDocument()
 
 void MyGDrive::DownloadDatabase()
 {
-	SetResourceIndex(-1); //Clear the documents collection
-	int ret_code = ListResources();
-	if (ret_code)
-		throw CException("Google error");
-	remove("database.dat");
-	char* str = "database.dat";
-	int data = -1;
-	for (int i = 0;i<GetResourceCount();i++)
+	try
 	{
-		SetResourceIndex(i);
-		if (!strcmp(str, GetResourceTitle())) data = i;
-	}
-	SetResourceIndex(data);
-	char buffer[LINE_LEN + 1]="database.dat";
-	SetLocalFile(buffer);
-	ret_code = DownloadFile(""); //Use the default file format
-	if (ret_code)
-	{
-		FILE *f = fopen("database.dat", "wb, ccs=UTF-8");
-		fclose(f);
+		SetResourceIndex(-1); //Clear the documents collection
+		int ret_code = ListResources();
+		if (ret_code)
+			throw CException("Google error");
+		remove("database.dat");
+		char* str = "database.dat";
+		int data = -1;
+		for (int i = 0;i < GetResourceCount();i++)
+		{
+			SetResourceIndex(i);
+			if (!strcmp(str, GetResourceTitle())) data = i;
+		}
+		SetResourceIndex(data);
+		char buffer[LINE_LEN + 1] = "database.dat";
+		SetLocalFile(buffer);
+		ret_code = DownloadFile(""); //Use the default file format
+		if (ret_code)
+		{
+			FILE *f = fopen("database.dat", "wb, ccs=UTF-8");
+			fclose(f);
+			return;
+		}
 		return;
 	}
-	return;
+	catch (...) {}
 }
 
 void MyGDrive::UploadDatabase()
 {
-	Void();
-	SetResourceIndex(-1);
-	char* str = "database.dat";
-	for (int i = 0;i < GetResourceCount();i++)
+	try
 	{
-		SetResourceIndex(i);
-		if (!strcmp(str, GetResourceTitle()))
+		Void();
+		SetResourceIndex(-1);
+		char* str = "database.dat";
+		for (int i = 0;i < GetResourceCount();i++)
 		{
-			int ret_code = DeleteResource(); //Use the default file format
-			if (ret_code)
-				throw CException("Google error");
+			SetResourceIndex(i);
+			if (!strcmp(str, GetResourceTitle()))
+			{
+				int ret_code = DeleteResource(); //Use the default file format
+				if (ret_code)
+					throw CException("Google error");
+			}
 		}
-	}
-	SetResourceIndex(-1);
-	SetLocalFile("database.dat");
-	UploadFile("database.dat");
-	int ret_code = GetLastErrorCode();
+		SetResourceIndex(-1);
+		SetLocalFile("database.dat");
+		UploadFile("database.dat");
+		int ret_code = GetLastErrorCode();
 
-	if (ret_code)
-		throw CException("Google error");
-	return;
+		if (ret_code)
+			throw CException("Google error");
+		return;
+	}
+	catch(...) {}
 }
 
 bool MyGDrive::Menu()
@@ -229,6 +241,6 @@ bool MyGDrive::Menu()
 		}
 		else
 		{
-			printf("Please select a number from [1-5].\n");
+			printf("Please select a number from [1-7].\n");
 		} // end of command checking
 	}  // end of main while loop

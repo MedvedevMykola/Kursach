@@ -2,22 +2,29 @@
 #include <ctime>    
    
 using namespace std;
+CObj::CObj()
+{
+	/*name.resize(5000);
+	text.resize(5000);*/
+}
 /******************************************
 *			êîíñòðóêòîð					  *
 ******************************************/
 CObj::CObj(const CObj & obj)
 {
+	/*name.resize(5000);
+	text.resize(5000);*/
 	name = obj.name;
-	description = obj.description;
 	text = obj.text;
 	start = obj.start;
 	deadline = obj.deadline;
 	status = obj.status;
 }
-CObj::CObj(string name1, string desc1, string text1, STime dline1, char stat)
+CObj::CObj(string name1, string text1, STime dline1, char stat)
 {
+	/*name.resize(5000);
+	text.resize(5000);*/
 	name = name1;
-	description = desc1;
 	text = text1;
 	set_start();
 	deadline = dline1;
@@ -37,7 +44,6 @@ void CObj::set_start()
 	
 	start.year = (ptm->tm_year + 1900);
 
-	start.month = (ptm->tm_mon + 1);
 	start.month = (ptm->tm_mon + 1);
 
 	start.day = (ptm->tm_mday);
@@ -92,15 +98,23 @@ void CObj::check_status()
 	curr_time.year = (ptm->tm_year + 1900);
 
 	curr_time.month = (ptm->tm_mon + 1);
-	curr_time.month = (ptm->tm_mon + 1);
 
 	curr_time.day = (ptm->tm_mday);
 	curr_time.hour = (ptm->tm_hour) % 24;
 	curr_time.minutes = (ptm->tm_min);
-	if (deadline < curr_time)
+	if ((deadline < curr_time) && this->status == '0')
 	{
 		this->status = '1';
 	}
+}
+
+void CObj::Copy(const CObj & obj)
+{
+	name = obj.name;
+	text = obj.text;
+	start = obj.start;
+	deadline = obj.deadline;
+	status = obj.status;
 }
 
 CObj::~CObj()

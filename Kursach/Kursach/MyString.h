@@ -8,7 +8,7 @@ using std::string;
 
 struct MyString
 {
-	char name[256];
+	char name[64];
 	char text[4096];
 	STime start;
 	STime deadline;

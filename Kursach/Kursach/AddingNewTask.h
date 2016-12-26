@@ -81,6 +81,7 @@ namespace Kursach {
 			this->Deadline2->CustomFormat = L"dd MMMM yyyy  H:mm";
 			this->Deadline2->Format = System::Windows::Forms::DateTimePickerFormat::Custom;
 			this->Deadline2->Location = System::Drawing::Point(350, 25);
+			this->Deadline2->MinDate = System::DateTime(2016, 12, 26, 0, 0, 0, 0);
 			this->Deadline2->Name = L"Deadline2";
 			this->Deadline2->Size = System::Drawing::Size(199, 20);
 			this->Deadline2->TabIndex = 0;
@@ -88,14 +89,18 @@ namespace Kursach {
 			// Name2
 			// 
 			this->Name2->Location = System::Drawing::Point(15, 25);
+			this->Name2->MaxLength = 63;
+			this->Name2->Multiline = false;
 			this->Name2->Name = L"Name2";
 			this->Name2->Size = System::Drawing::Size(329, 20);
 			this->Name2->TabIndex = 2;
 			this->Name2->Text = L"";
+			this->Name2->WordWrap = false;
 			// 
 			// Text2
 			// 
 			this->Text2->Location = System::Drawing::Point(12, 64);
+			this->Text2->MaxLength = 4095;
 			this->Text2->Name = L"Text2";
 			this->Text2->Size = System::Drawing::Size(537, 248);
 			this->Text2->TabIndex = 3;
@@ -113,7 +118,7 @@ namespace Kursach {
 			// Deadline1
 			// 
 			this->Deadline1->AutoSize = true;
-			this->Deadline1->Location = System::Drawing::Point(390, 9);
+			this->Deadline1->Location = System::Drawing::Point(347, 9);
 			this->Deadline1->Name = L"Deadline1";
 			this->Deadline1->Size = System::Drawing::Size(52, 13);
 			this->Deadline1->TabIndex = 5;
@@ -142,7 +147,7 @@ namespace Kursach {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(561, 366);
+			this->ClientSize = System::Drawing::Size(564, 371);
 			this->Controls->Add(this->Adding);
 			this->Controls->Add(this->Text1);
 			this->Controls->Add(this->Deadline1);
@@ -150,8 +155,10 @@ namespace Kursach {
 			this->Controls->Add(this->Text2);
 			this->Controls->Add(this->Name2);
 			this->Controls->Add(this->Deadline2);
+			this->MaximumSize = System::Drawing::Size(580, 410);
+			this->MinimumSize = System::Drawing::Size(580, 410);
 			this->Name = L"AddingNewTask";
-			this->Text = L"AddingNewTask";
+			this->Text = L"NewTask";
 			this->Load += gcnew System::EventHandler(this, &AddingNewTask::SLoad);
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -165,17 +172,23 @@ namespace Kursach {
 			return chars;
 		}
 	private: System::Void Add(System::Object^  sender, System::EventArgs^  e) {
-		My_List list;
-		list.read_from_file();
-		string name = MarshalString(Name2->Text);
-		string text = MarshalString(Text2->Text);
-		STime deadline;
-		deadline.Set(Deadline2->Value);
-		list.add_obj(CObj(name, text, deadline, '0'));
-		list.write_to_file();
-		Close();
+		if (Name2->Text != ""&&Text2->Text != "")
+		{
+			My_List list;
+			list.read_from_file();
+			string name = MarshalString(Name2->Text);
+			string text = MarshalString(Text2->Text);
+			STime deadline;
+			deadline.Set(Deadline2->Value);
+			list.add_obj(CObj(name, text, deadline, '0'));
+			list.write_to_file();
+			Close();
+		}
 	}
 	private: System::Void SLoad(System::Object^  sender, System::EventArgs^  e) {
+		DateTime cur_time= DateTime::Now;
+		Deadline2->MinDate = cur_time.AddHours(1);
 	}
+
 	};
 }

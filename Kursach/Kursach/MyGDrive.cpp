@@ -297,5 +297,6 @@ bool MyGDrive::ConnectionAvailable()
 	{
 		return false;
 	}
+
 	return true;
 }

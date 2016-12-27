@@ -134,10 +134,11 @@
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="MyGDrive.h" />
+    <ClInclude Include="MyGdrive.h" />
     <ClInclude Include="MyString.h" />
     <ClInclude Include="My_List.h" />
     <ClInclude Include="Obj.h" />
+    <ClInclude Include="Str.h" />
     <ClInclude Include="Time.h" />
   </ItemGroup>
   <ItemGroup>
@@ -145,7 +146,7 @@
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="Kursach.cpp" />
     <ClCompile Include="MyForm.cpp" />
-    <ClCompile Include="MyGDrive.cpp" />
+    <ClCompile Include="MyGdrive.cpp" />
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="My_List.cpp" />
     <ClCompile Include="Obj.cpp" />

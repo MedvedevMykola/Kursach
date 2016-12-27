@@ -1,6 +1,7 @@
 #pragma once
 #include "Obj.h"
 #include "MyString.h"
+#include "Str.h"
 #include <set>
 #include <string>
 #include <vector>
@@ -28,6 +29,8 @@ class My_List
 	vector<CObj>table_outtime;//список пасивних завдань
 public:
 	My_List();
+	char* readAuth();
+	void writeAuth (char*);
 	void add_obj(CObj);    //функція добавки нового завдання
 	void show(DataGridView^);//виведення списку імен
 	void showIntime(DataGridView^);

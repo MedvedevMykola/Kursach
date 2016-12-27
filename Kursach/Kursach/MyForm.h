@@ -14,6 +14,7 @@ namespace Kursach {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Net;
 
 
 	/// <summary>
@@ -70,6 +71,7 @@ namespace Kursach {
 
 
 
+
 	private: System::ComponentModel::IContainer^  components;
 
 
@@ -97,6 +99,7 @@ namespace Kursach {
 			this->SortByTime = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->SortByDeadline = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->NameList = (gcnew System::Windows::Forms::DataGridView());
+			this->Name3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Deadline2 = (gcnew System::Windows::Forms::RichTextBox());
 			this->Name1 = (gcnew System::Windows::Forms::Label());
 			this->Date2 = (gcnew System::Windows::Forms::RichTextBox());
@@ -107,7 +110,6 @@ namespace Kursach {
 			this->Text2 = (gcnew System::Windows::Forms::RichTextBox());
 			this->Text1 = (gcnew System::Windows::Forms::Label());
 			this->Status2 = (gcnew System::Windows::Forms::Button());
-			this->Name3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ToolPanel->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->NameList))->BeginInit();
 			this->SuspendLayout();
@@ -216,6 +218,15 @@ namespace Kursach {
 			this->NameList->TabIndex = 2;
 			this->NameList->CellClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::Showing);
 			// 
+			// Name3
+			// 
+			this->Name3->HeaderText = L"Назва";
+			this->Name3->Name = L"Name3";
+			this->Name3->ReadOnly = true;
+			this->Name3->Resizable = System::Windows::Forms::DataGridViewTriState::False;
+			this->Name3->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			this->Name3->Width = 155;
+			// 
 			// Deadline2
 			// 
 			this->Deadline2->BackColor = System::Drawing::SystemColors::Control;
@@ -317,15 +328,6 @@ namespace Kursach {
 			this->Status2->UseVisualStyleBackColor = false;
 			this->Status2->Click += gcnew System::EventHandler(this, &MyForm::ChangeStatus);
 			// 
-			// Name3
-			// 
-			this->Name3->HeaderText = L"Назва";
-			this->Name3->Name = L"Name3";
-			this->Name3->ReadOnly = true;
-			this->Name3->Resizable = System::Windows::Forms::DataGridViewTriState::False;
-			this->Name3->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
-			this->Name3->Width = 155;
-			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -358,14 +360,15 @@ namespace Kursach {
 #pragma endregion
 	int table = 0;
 	int sort = 0;
-	
 	void hide();
 	void visible();
 
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		My_List list;	
 		MyGDrive Gdrive;
-		//Text1->Text=gcnew String(Gdrive.GetAuthorization());
+		char Auth[900];
+		strcpy(Auth, Gdrive.Auth());
+		list.writeAuth(Auth);
 		Gdrive.DownloadDatabase();
 		list.read_from_file();
 		table = 0;
@@ -388,7 +391,9 @@ private: System::Void NewTask(System::Object^  sender, System::EventArgs^  e) {
 		list.SortByDeadline();
 	else
 		list.SortByName();
+
 	list.write_to_file();
+
 	if (table == 0)
 		list.showIntime(NameList);
 	else if (table == 1)
@@ -396,6 +401,12 @@ private: System::Void NewTask(System::Object^  sender, System::EventArgs^  e) {
 	else
 		list.show(NameList);
 	hide();
+
+	MyGDrive Gdrive;
+	char Auth[1000];
+	strcpy(Auth, list.readAuth());
+	Gdrive.Auth1(Auth);
+	Gdrive.UploadDatabase();
 }
 
 private: System::Void Showing(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
@@ -457,6 +468,7 @@ private: System::Void ChangeStatus(System::Object^  sender, System::EventArgs^  
 	else
 		list.SortByName();
 	list.write_to_file();
+
 	if (table == 0)
 		list.showIntime(NameList);
 	else if (table == 1)
@@ -464,6 +476,12 @@ private: System::Void ChangeStatus(System::Object^  sender, System::EventArgs^  
 	else
 		list.show(NameList);
 	visible();
+
+	MyGDrive Gdrive;
+	char Auth[1000];
+	strcpy(Auth, list.readAuth());
+	Gdrive.Auth1(Auth);
+	Gdrive.UploadDatabase();
 }
 
 private: System::Void SortingByName(System::Object^  sender, System::EventArgs^  e) {
@@ -472,6 +490,7 @@ private: System::Void SortingByName(System::Object^  sender, System::EventArgs^ 
 	list.read_from_file();
 	list.SortByName();
 	list.write_to_file();
+
 	if (table == 0)
 		list.showIntime(NameList);
 	else if (table == 1)
@@ -486,6 +505,7 @@ private: System::Void SortingByTime(System::Object^  sender, System::EventArgs^ 
 	list.read_from_file();
 	list.SortByDate();
 	list.write_to_file();
+
 	if (table == 0)
 		list.showIntime(NameList);
 	else if (table == 1)
@@ -500,6 +520,7 @@ private: System::Void SortingByDeadline(System::Object^  sender, System::EventAr
 	list.read_from_file();
 	list.SortByDeadline();
 	list.write_to_file();
+
 	if (table == 0)
 		list.showIntime(NameList);
 	else if (table == 1)

@@ -14,6 +14,7 @@ namespace Kursach {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Net;
 
 
 	/// <summary>
@@ -54,7 +55,7 @@ namespace Kursach {
 	private: System::Windows::Forms::Label^  Name1;
 	private: System::Windows::Forms::RichTextBox^  Date2;
 	private: System::Windows::Forms::Label^  Status1;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Name3;
+
 	private: System::Windows::Forms::RichTextBox^  Name2;
 	private: System::Windows::Forms::Label^  Date1;
 	private: System::Windows::Forms::Label^  Deadline1;
@@ -65,6 +66,9 @@ namespace Kursach {
 	private: System::Windows::Forms::ToolStripMenuItem^  SortByName;
 	private: System::Windows::Forms::ToolStripMenuItem^  SortByTime;
 	private: System::Windows::Forms::ToolStripMenuItem^  SortByDeadline;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Name3;
+
+
 
 
 
@@ -198,10 +202,16 @@ namespace Kursach {
 			// 
 			// NameList
 			// 
+			this->NameList->AllowUserToAddRows = false;
+			this->NameList->AllowUserToDeleteRows = false;
+			this->NameList->AllowUserToResizeColumns = false;
+			this->NameList->AllowUserToResizeRows = false;
 			this->NameList->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->NameList->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(1) { this->Name3 });
 			this->NameList->Location = System::Drawing::Point(12, 28);
 			this->NameList->Name = L"NameList";
+			this->NameList->ReadOnly = true;
+			this->NameList->RowHeadersVisible = false;
 			this->NameList->RowHeadersWidth = 30;
 			this->NameList->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->NameList->Size = System::Drawing::Size(158, 368);
@@ -213,7 +223,9 @@ namespace Kursach {
 			this->Name3->HeaderText = L"Назва";
 			this->Name3->Name = L"Name3";
 			this->Name3->ReadOnly = true;
-			this->Name3->Width = 125;
+			this->Name3->Resizable = System::Windows::Forms::DataGridViewTriState::False;
+			this->Name3->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			this->Name3->Width = 155;
 			// 
 			// Deadline2
 			// 
@@ -222,7 +234,7 @@ namespace Kursach {
 			this->Deadline2->Location = System::Drawing::Point(510, 60);
 			this->Deadline2->Name = L"Deadline2";
 			this->Deadline2->ReadOnly = true;
-			this->Deadline2->Size = System::Drawing::Size(138, 19);
+			this->Deadline2->Size = System::Drawing::Size(138, 21);
 			this->Deadline2->TabIndex = 3;
 			this->Deadline2->Text = L"";
 			// 
@@ -242,7 +254,7 @@ namespace Kursach {
 			this->Date2->Location = System::Drawing::Point(366, 60);
 			this->Date2->Name = L"Date2";
 			this->Date2->ReadOnly = true;
-			this->Date2->Size = System::Drawing::Size(138, 19);
+			this->Date2->Size = System::Drawing::Size(138, 21);
 			this->Date2->TabIndex = 5;
 			this->Date2->Text = L"";
 			// 
@@ -261,7 +273,7 @@ namespace Kursach {
 			this->Name2->Location = System::Drawing::Point(222, 60);
 			this->Name2->Name = L"Name2";
 			this->Name2->ReadOnly = true;
-			this->Name2->Size = System::Drawing::Size(138, 21);
+			this->Name2->Size = System::Drawing::Size(129, 45);
 			this->Name2->TabIndex = 7;
 			this->Name2->Text = L"";
 			// 
@@ -320,7 +332,7 @@ namespace Kursach {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(807, 412);
+			this->ClientSize = System::Drawing::Size(807, 411);
 			this->Controls->Add(this->Status2);
 			this->Controls->Add(this->Text1);
 			this->Controls->Add(this->Text2);
@@ -333,8 +345,10 @@ namespace Kursach {
 			this->Controls->Add(this->Deadline2);
 			this->Controls->Add(this->NameList);
 			this->Controls->Add(this->ToolPanel);
+			this->MaximumSize = System::Drawing::Size(823, 450);
+			this->MinimumSize = System::Drawing::Size(823, 450);
 			this->Name = L"MyForm";
-			this->Text = L"MyForm";
+			this->Text = L"Task Manager";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->ToolPanel->ResumeLayout(false);
 			this->ToolPanel->PerformLayout();
@@ -350,24 +364,18 @@ namespace Kursach {
 	void visible();
 
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
-		My_List list;
-		/*STime s = { 2016,12,30,16,12 };
-		CObj a1("qwe1", "QWERTY1", s, '0');
-		CObj a2("qwe2", "QWERTY2", s, '0');
-		CObj a3("qwe3", "QWERTY3", s, '0');
-		CObj a4("qwe4", "QWERTY4", s, '1');
-		CObj a5("qwe5", "QWERTY5", s, '2');
-		list.add_obj(a1);
-		list.add_obj(a3);
-		list.add_obj(a2);
-		list.add_obj(a4);
-		list.add_obj(a5);*/
-		//list.read_from_file();
+		My_List list;	
+		MyGDrive Gdrive;
+		char Auth[900];
+		strcpy(Auth, Gdrive.Auth());
+		list.writeAuth(Auth);
+		Gdrive.DownloadDatabase();
 		list.read_from_file();
 		table = 0;
 		sort = 0;
 		list.SortByDate();
 		list.write_to_file();
+		Gdrive.UploadDatabase();
 		list.showIntime(NameList);
 		hide();
 	}
@@ -383,7 +391,9 @@ private: System::Void NewTask(System::Object^  sender, System::EventArgs^  e) {
 		list.SortByDeadline();
 	else
 		list.SortByName();
+
 	list.write_to_file();
+
 	if (table == 0)
 		list.showIntime(NameList);
 	else if (table == 1)
@@ -391,6 +401,12 @@ private: System::Void NewTask(System::Object^  sender, System::EventArgs^  e) {
 	else
 		list.show(NameList);
 	hide();
+
+	MyGDrive Gdrive;
+	char Auth[1000];
+	strcpy(Auth, list.readAuth());
+	Gdrive.Auth1(Auth);
+	Gdrive.UploadDatabase();
 }
 
 private: System::Void Showing(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
@@ -452,6 +468,7 @@ private: System::Void ChangeStatus(System::Object^  sender, System::EventArgs^  
 	else
 		list.SortByName();
 	list.write_to_file();
+
 	if (table == 0)
 		list.showIntime(NameList);
 	else if (table == 1)
@@ -459,6 +476,12 @@ private: System::Void ChangeStatus(System::Object^  sender, System::EventArgs^  
 	else
 		list.show(NameList);
 	visible();
+
+	MyGDrive Gdrive;
+	char Auth[1000];
+	strcpy(Auth, list.readAuth());
+	Gdrive.Auth1(Auth);
+	Gdrive.UploadDatabase();
 }
 
 private: System::Void SortingByName(System::Object^  sender, System::EventArgs^  e) {
@@ -467,6 +490,7 @@ private: System::Void SortingByName(System::Object^  sender, System::EventArgs^ 
 	list.read_from_file();
 	list.SortByName();
 	list.write_to_file();
+
 	if (table == 0)
 		list.showIntime(NameList);
 	else if (table == 1)
@@ -481,6 +505,7 @@ private: System::Void SortingByTime(System::Object^  sender, System::EventArgs^ 
 	list.read_from_file();
 	list.SortByDate();
 	list.write_to_file();
+
 	if (table == 0)
 		list.showIntime(NameList);
 	else if (table == 1)
@@ -495,6 +520,7 @@ private: System::Void SortingByDeadline(System::Object^  sender, System::EventAr
 	list.read_from_file();
 	list.SortByDeadline();
 	list.write_to_file();
+
 	if (table == 0)
 		list.showIntime(NameList);
 	else if (table == 1)
@@ -503,5 +529,6 @@ private: System::Void SortingByDeadline(System::Object^  sender, System::EventAr
 		list.show(NameList);
 	hide();
 }
+
 };
 }

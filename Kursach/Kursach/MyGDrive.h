@@ -6,6 +6,7 @@
 #include <conio.h>
 #include "Exception.h"
 #include "ingoogle.h"
+
 #define LINE_LEN 100
 
 
@@ -18,6 +19,8 @@ public:
 		e->Accept = true;
 		return 0;
 	}
+	char* Auth();
+	void Auth1(char*);
 	void Void();            //функція яка нічого не робить але потрібна(не питайте навіщо)
 	void displayDocuments();//показує документи GoogleDrive(не потрібна)
 	void DownloadDocument();//скачує документ з GoogleDrive(не потрібна)
@@ -26,4 +29,5 @@ public:
 	void DownloadDatabase();//скачує базу даних з GoogleDrive
 	void UploadDatabase();  //вигружає базу даних в GoogleDrive
 	bool Menu();            //меню для роботи з GoogleDrive
+	bool ConnectionAvailable();
 };

@@ -8,6 +8,24 @@ My_List::My_List()
 {
 }
 
+char * My_List::readAuth()
+{
+	FILE *f = fopen("Auth.dat", "rb, ccs=UTF-8");
+	Str *temp = new Str;
+	fread(temp, sizeof(Str), 1, f);
+	return temp->str;
+	fclose(f);
+}
+
+void My_List::writeAuth(char * s)
+{
+	FILE *f = fopen("Auth.dat", "wb, ccs=UTF-8");
+	Str *temp = new Str;
+	strcpy(temp->str, s);
+	fwrite(temp, sizeof(Str), 1, f);
+	fclose(f);
+}
+
 void My_List::add_obj(CObj obj)
 {
 	obj.check_status();

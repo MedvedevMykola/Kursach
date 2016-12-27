@@ -2,7 +2,6 @@
 #include "MyGDrive.h"
 #include "AddingNewTask.h"
 #include "My_List.h"
-#include "Exception.h"
 #include <locale.h>
 
 

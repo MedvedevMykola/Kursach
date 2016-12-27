@@ -130,7 +130,6 @@
     <ClInclude Include="AddingNewTask.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Exception.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -143,7 +142,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddingNewTask.cpp" />
-    <ClCompile Include="Exception.cpp" />
     <ClCompile Include="Kursach.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="MyGdrive.cpp" />

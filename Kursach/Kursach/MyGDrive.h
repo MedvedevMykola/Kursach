@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <iostream>
 #include <conio.h>
-#include "Exception.h"
 #include "ingoogle.h"
 
 #define LINE_LEN 100

@@ -1,7 +1,6 @@
 #pragma once
 #include "MyGDrive.h"
 #include "My_List.h"
-#include "Exception.h"
 #include <locale.h>
 
 using std::string;

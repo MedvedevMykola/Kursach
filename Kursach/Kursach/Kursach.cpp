@@ -1,7 +1,6 @@
 #include "MyGDrive.h"
 #include "MyForm.h"
 #include "My_List.h"
-#include "Exception.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
